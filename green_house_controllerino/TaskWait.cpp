@@ -5,7 +5,7 @@ TaskWait::TaskWait(){
 }
 
 bool TaskWait::updateAndCheckTime(int basePeriod){
-  if(GLOBAL_CLASS.getActualTask() == EnumTask::WAIT)
+  if(GLOBAL_CLASS.isWaiting()){
     timeElapsed += basePeriod;
     return true;
   }else{
@@ -14,14 +14,5 @@ bool TaskWait::updateAndCheckTime(int basePeriod){
 }
 
 void TaskWait::tick(){
-  /*if(GLOBAL_CLASS.getOpen()){
-    GLOBAL_CLASS.setActualTask = EnumTask.OPENPUMP;
-    return;
-  }
-  if(GLOBAL_CLASS.getClose()){
-    GLOBAL_CLASS.setActualTask = EnumTask.CLOSEPUMP;
-    return;
-  }*/
-  //guarda il prof
-  
+
 }

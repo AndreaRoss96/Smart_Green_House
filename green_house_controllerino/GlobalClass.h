@@ -11,18 +11,21 @@
 
 
 class GlobalClass { //SINGLETON
-  EnumTask actualTask = EnumTask.WAIT;//TODO
-  bool automatic = true;
+
 
   private:
       GlobalClass() {}
 
-      bool searcing;
-      bool connected;
-      bool wait;
-      bool opening;
-      bool closing;
-      
+      bool automatic = true;
+      int flow = 0;
+      int humidity = 0;
+      bool connected = false;
+
+      bool searching = true;
+      bool wait = true;
+      bool opening = false;
+      bool closing = false;
+
 
   public:
     /*
@@ -34,27 +37,33 @@ class GlobalClass { //SINGLETON
         return gbInstance;
     }
 
-    /*
-    Set the actual Task
-    */
-    void setActualTask(EnumTask task) {
-      this->actualTask = task;
-    }
-
-    /*
-    return
-      the actual Task
-    */
-    EnumPhase getActualTask() {
-      return actualTask;
-    }
-
     int getEngagementDist(){
       return DIST;
     }
-    //int get.... TODO
 
-    int isAutoMode(){
-      return automatic;
-    }
+    void setFlow(int f){ flow = f; }
+    void setHumidity(int h){ humidity = h; }
+    void toggleAutomode(){ automatic = !automatic; }
+    void toggleConnection(){ connected = !connected; }
+
+
+    int getFlow(){ return flow;  }
+    int getHumidity(){ return humidity;  }
+    bool isAutoMode(){ return automatic;  }
+    bool isConnected(){ return connected;  }
+/*
+    bool isSearching(){ return searcing; }
+    void connectionFound(){ searcing = false; connected = true; }
+
+    bool isConnected(){ return connected; }
+    void connectionLost(){ searcing = true; connected = false; }
+*/
+    bool isWaiting(){ return wait; }
+    void done(){ opening = false; closing = false; wait = true; }
+
+    bool isOpening(){ return opening; }
+    void open(){ opening = true; closing = false; wait = false; }
+
+    bool isClosing(){ return closing; }
+    void close(){ opening = false; closing = true; wait = false; }
 };

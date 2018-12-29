@@ -3,13 +3,13 @@
 void Scheduler::init(int basePeriod){
  this->basePeriod = basePeriod;
  timer.setupPeriod(basePeriod);
- nPhases = 0;
+ nTasks = 0;
 }
 
-bool Scheduler::addPhase(Phase* phase){
-  if (nPhases < MAX_TASKS-1){
-    phaseList[nPhases] = phase;
-    nPhases++;
+bool Scheduler::addPhase(Task* task){
+  if (nTasks < MAX_TASKS-1){
+    taskList[nTasks] = task;
+    nTasks++;
     return true;
   } else {
     return false;
@@ -18,9 +18,9 @@ bool Scheduler::addPhase(Phase* phase){
 
 void Scheduler::schedule(){
   timer.waitForNextTick();
-  for (int i = 0; i < nPhases; i++){
-    if (phaseList[i]->updateAndCheckTime(basePeriod)){
-    phaseList[i]->tick();
+  for (int i = 0; i < nTasks; i++){
+    if (taskList[i]->updateAndCheckTime(basePeriod)){
+    taskList[i]->tick();
     }
   }
 }

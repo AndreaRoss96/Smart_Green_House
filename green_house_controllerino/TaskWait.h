@@ -2,8 +2,6 @@
 #ifndef __TASKWAIT__
 
 #include "Task.h"
-#include "MsgService.h"
-#include "MsgServiceBT.h"
 
 class TaskWait: public Task{
   public:
@@ -13,3 +11,5 @@ class TaskWait: public Task{
   private:
     int timeElapsed;
 }
+
+#endif
