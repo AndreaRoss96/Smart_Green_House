@@ -1,5 +1,5 @@
-#define __TASKCOMUNICATE__
 #ifndef __TASKCOMUNICATE__
+#define __TASKCOMUNICATE__
 
 #include "Task.h"
 #include "MsgService.h"
@@ -8,11 +8,13 @@
 class TaskComunicate: public Task{
   public:
     TaskComunicate(MsgServiceBT *msgSBT);
-    bool updateAndCheckTime(int basePeriod);
     void tick();
+    void init(int period);
+
   private:
     int timeElapsed;
     MsgServiceBT *msgSBT;
-}
+    Light *la, *lm;
+};
 
 #endif

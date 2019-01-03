@@ -3,17 +3,19 @@
 
 #include "Task.h"
 #include "ServoTimer2.h"
+#include "LevelIndicator.h"
 
 
 class TaskOpen: public Task{
   public:
-    TaskOpen(/*TODO servomotore*/);
-    bool updateAndCheckTime(int basePeriod);
+    TaskOpen(ServoTimer2 *servo,LevelIndicator *lp);
     void tick();
+    void init(int period);
+
   private:
     int timeElapsed;
     ServoTimer2 servo;
-
-}
+    LevelIndicator *lp;
+};
 
 #endif

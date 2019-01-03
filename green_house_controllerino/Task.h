@@ -7,9 +7,25 @@
 #include "Arduino.h"
 #include "MsgService.h"
 
-class Phase {
+class Task {
+  int myPeriod;
+  int timeElapsed;
 public:
-  virtual bool updateAndCheckTime(int basePeriod) = 0;
+  virtual void init(int period){
+    myPeriod = period;
+    timeElapsed = 0;
+  }
+  
+  bool updateAndCheckTime(int basePeriod){
+    timeElapsed += basePeriod;
+    if (timeElapsed >= myPeriod){
+      timeElapsed = 0;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   virtual void tick() = 0;
 };
 

@@ -1,22 +1,16 @@
 #include "TaskComunicate.h"
-#include <iostream>
-#include <string>
+#include "Light.h"
 
 
-TaskComunicate::TaskComunicate(MsgServiceBT *msgSBT){
-  this->timeElapsed = 0;
+TaskComunicate::TaskComunicate(MsgServiceBT *msgSBT, Light *la, Light *lm){
   this->msgSBT = msgSBT;
+  this->la=la;
+  this->lm=lm;
 }
-/*
-bool TaskComunicate::updateAndCheckTime(int basePeriod){
-  if(GLOBAL_CLASS.isWaiting()){
-    timeElapsed += basePeriod;
-    return true;
-  }else{
-    return false;
-  }
-}*/
-bool TaskComunicate::updateAndCheckTime(int basePeriod){ return true; }
+
+void TaskComunicate::init(int period){
+  Task::init(period);
+}
 
 void TaskComunicate::tick(){
   while(MsgService.isMsgAvailable()){
@@ -55,7 +49,9 @@ void TaskComunicate::tick(){
           break;
         }
         case 't':{//'t' = changes the mode
-          GLOBAL_CLASS.toggleAutomode(h);
+          GLOBAL_CLASS.toggleAutomode();
+          La->toggle();
+          lm->toggle();
           break;
         }
       }

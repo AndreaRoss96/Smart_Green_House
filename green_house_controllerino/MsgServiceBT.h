@@ -3,7 +3,8 @@
 
 #include "Arduino.h"
 #include "SoftwareSerial.h"
-
+#include "MsgService.h"
+/*
 class Msg {
   String content;
 
@@ -11,17 +12,17 @@ public:
   Msg(const String& content){
     this->content = content;
   }
-  
+
   String getContent(){
     return content;
   }
-};
+};*/
 
 class MsgServiceBT {
-    
-public: 
-  MsgServiceBT(int rxPin, int txPin);  
-  void init();  
+
+public:
+  MsgServiceBT(int rxPin, int txPin);
+  void init();
   bool isMsgAvailable();
   Msg* receiveMsg();
   bool sendMsg(Msg msg);
@@ -29,7 +30,7 @@ public:
 private:
   String content;
   SoftwareSerial* channel;
-  
+
 };
 
 #endif

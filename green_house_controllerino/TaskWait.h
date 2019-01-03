@@ -1,15 +1,16 @@
-#define __TASKWAIT__
 #ifndef __TASKWAIT__
+#define __TASKWAIT__
 
 #include "Task.h"
 
 class TaskWait: public Task{
   public:
     TaskWait();
-    bool updateAndCheckTime(int basePeriod);
     void tick();
+    void init(int period);
+
   private:
     int timeElapsed;
-}
+};
 
 #endif

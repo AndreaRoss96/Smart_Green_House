@@ -1,19 +1,15 @@
 #include "TaskSearch.h"
 
 TaskSearch::TaskSearch(Sensor *prox){
-  this->timeElapsed = 0;
+  this->prox = prox;
 }
-/*
-  if(GLOBAL_CLASS.isSearching()){
-  bool TaskSearch::updateAndCheckTime(int basePeriod){
-    timeElapsed += basePeriod;
-    return true;
-  }else{
-    return false;
-  }
-}*/
-bool TaskSearch::updateAndCheckTime(int basePeriod){ return true; }
 
+void TaskSearch::init(int period){
+    Task::init(period);
+    this->connected = GLOBAL_CLASS.isConnected();
+}
+
+//TODO look if you can understand how the bt connetion works
 void TaskSearch::tick(){
   if(!GLOBAL_CLASS.isConnected() && prox.getValue() < GLOBAL_CLASS.getEngagementDist()){
     GLOBAL_CLASS.toggleConnection();

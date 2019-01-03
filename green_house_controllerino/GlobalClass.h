@@ -1,4 +1,3 @@
-#include "EnumPhase.h"
 #include "Arduino.h"
 
 #define DIST  0.3
@@ -43,7 +42,7 @@ class GlobalClass { //SINGLETON
 
     void setFlow(int f){ flow = f; }
     void setHumidity(int h){ humidity = h; }
-    void toggleAutomode(){ automatic = !automatic; }
+    void toggleAutomode(){ automatic = !automatic;}
     void toggleConnection(){ connected = !connected; }
 
 
