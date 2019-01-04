@@ -4,10 +4,11 @@
 #include "Task.h"
 #include "MsgService.h"
 #include "MsgServiceBT.h"
+#include "Light.h"
 
 class TaskComunicate: public Task{
   public:
-    TaskComunicate(MsgServiceBT *msgSBT);
+    TaskComunicate(MsgServiceBT *msgSBT, Light *la, Light *lm );
     void tick();
     void init(int period);
 

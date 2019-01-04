@@ -11,10 +11,11 @@ class TaskOpen: public Task{
     TaskOpen(ServoTimer2 *servo,LevelIndicator *lp);
     void tick();
     void init(int period);
+    bool updateAndCheckTime(int basePeriod){
 
   private:
     int timeElapsed;
-    ServoTimer2 servo;
+    ServoTimer2 *servo;
     LevelIndicator *lp;
 };
 

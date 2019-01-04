@@ -8,7 +8,7 @@
 class Scheduler {
 
  int basePeriod;
- int nPhases;
+ int nTasks;
  Task* taskList[MAX_TASKS];
  Timer timer;
 

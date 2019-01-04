@@ -14,8 +14,8 @@ void Led::switchOn(){
 
 void Led::switchOff(){
   digitalWrite(pin,LOW);
+  this->status = 0;
 };
-this->status = 0;
 
 void toggle(){
   if(status){

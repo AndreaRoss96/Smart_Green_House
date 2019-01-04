@@ -10,26 +10,26 @@ FadingLed::Led(int pin){
 void FadingLed::switchOn(){
   digitalWrite(pin,HIGH);
   status = 1;
-  brightness = MAX_BRIG;
+  level = MAX_LVL;
 }
 
 void FadingLed::switchOff(){
   digitalWrite(pin,LOW);
   status = 0;
-  brightness = MIN_BRIG;
+  level = MIN_LVL;
 };
 
 void FadingLed::toggle(){
   if(status){
-    this.switchOff();
+    this->switchOff();
   }else{
-    this.switchOn();
+    this->switchOn();
   }
 }
 
-void FadingLed::setBrightness(int brightness){
-  if(brightness < MAX_BRIG && brightness > MIN_BRIG){
-    this->brightness = brightness;
-    analogWrite(this->pin, this, brightness)
+void FadingLed::setLevel(int level){
+  if(level < MAX_LVL && level > MIN_LVL){
+    this->level = level;
+    analogWrite(this->pin, this->level);
   }
 }

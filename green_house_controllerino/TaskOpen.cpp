@@ -20,9 +20,9 @@ TaskOpen::init(int period){
 }
 
 void TaskOpen::tick(){
-  if(servo->read() != map(GLOBAL_CLASS.getFlow(), 0, 100, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH)){
-    servo->write(map(GLOBAL_CLASS.getFlow(), 0, 100, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH));
-    lp->setLevel(map(GLOBAL_CLASS.getFlow(), 0, 100, MIN_LVL, MAX_LVL ));
+  if(servo->read() != (int)map(GLOBAL_CLASS.getFlow(), 0, 100, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH)){
+    this->servo->write((int)map(GLOBAL_CLASS.getFlow(), 0, 100, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH));
+    this->lp->setLevel((int)map(GLOBAL_CLASS.getFlow(), 0, 100, MIN_LVL, MAX_LVL ));
   }else{
     GLOBAL_CLASS.done();
   }

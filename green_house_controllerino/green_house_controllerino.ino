@@ -23,7 +23,7 @@
 #define PINAUTO 8
 #define PINMANU 7
 
-MsgServiceBT msgServiceBT = new MsgServiceBT(PINRX,PINTX);
+MsgServiceBT *msgServiceBT = new MsgServiceBT(PINRX,PINTX);
 
 Scheduler scheduler;
 
@@ -43,16 +43,16 @@ void setup() {
   Task *open = new TaskOpen(servo, lp);
   open->init(50);//TODO find the time
   Task *close = new TaskClose(servo, lp);
-  close->init(50);//TODO find the time
+  close->init(150);//TODO find the time
   Task *wait = new TaskWait();
-  wait->init(50);//TODO find the time
+  wait->init(250);//TODO find the time
   Task *communicate = new TaskComunicate(msgServiceBT);
-  communicate->init(50);//TODO find the time
+  communicate->init(100);//TODO find the time
   Task *search = new TaskSearch(prox);
   search->init(50);//TODO find the time
 
 
-  scheduler.init();//TODO find the time
+  scheduler.init(50);//TODO find the time
   scheduler.addTask(open);
   scheduler.addTask(close);
   scheduler.addTask(wait);

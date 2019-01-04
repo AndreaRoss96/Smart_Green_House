@@ -8,9 +8,9 @@
 class TaskClose: public Task{
   public:
     TaskClose(ServoTimer2 *servo, LevelIndicator *lp);
+    void init(int period);
     bool updateAndCheckTime(int basePeriod);
     void tick();
-    void init(int period);
 
   private:
     int timeElapsed;

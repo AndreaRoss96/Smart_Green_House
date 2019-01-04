@@ -6,7 +6,7 @@ void Scheduler::init(int basePeriod){
  nTasks = 0;
 }
 
-bool Scheduler::addPhase(Task* task){
+bool Scheduler::addTask(Task* task){
   if (nTasks < MAX_TASKS-1){
     taskList[nTasks] = task;
     nTasks++;

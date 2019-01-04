@@ -11,10 +11,10 @@ void TaskSearch::init(int period){
 
 //TODO look if you can understand how the bt connetion works
 void TaskSearch::tick(){
-  if(!GLOBAL_CLASS.isConnected() && prox.getValue() < GLOBAL_CLASS.getEngagementDist()){
+  if(!GLOBAL_CLASS.isConnected() && prox->getValue() < GLOBAL_CLASS.getEngagementDist()){
     GLOBAL_CLASS.toggleConnection();
   }else{
-    if (GLOBAL_CLASS.isConnected() && prox.getValue() > GLOBAL_CLASS.getEngagementDist()) {
+    if (GLOBAL_CLASS.isConnected() && prox->getValue() > GLOBAL_CLASS.getEngagementDist()) {
       GLOBAL_CLASS.toggleConnection();
     }
   }

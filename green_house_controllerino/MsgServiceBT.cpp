@@ -9,9 +9,9 @@ MsgServiceBT::MsgServiceBT(int rxPin, int txPin){
 void MsgServiceBT::init(){
   content.reserve(256);
   channel->begin(9600);
-  Channel.print("AT+NAMEgreen"); 
+  channel->print("AT+NAMEgreen");
   delay(1000);
-  Channel.print("AT+ROLE=0");
+  channel->print("AT+ROLE=0");
   delay(1000);
 }
 

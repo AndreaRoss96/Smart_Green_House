@@ -18,9 +18,9 @@ TaskClose::updateAndCheckTime(int basePeriod){
 }
 
 void TaskClose::tick(){
-  if(servo->read() != map(0, 0, 100, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH)){
-    servo->write(map(0, 0, 100, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH));
-    lp->setLevel(map(0, 0, 100, MIN_LVL, MAX_LVL));
+  if(this->servo->read() != (int)map(0, 0, 100, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH)){
+    this->servo->write((int)map(0, 0, 100, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH));
+    this->lp->setLevel((int)map(0, 0, 100, MIN_LVL, MAX_LVL));
   }else{
     GLOBAL_CLASS.done();
   }

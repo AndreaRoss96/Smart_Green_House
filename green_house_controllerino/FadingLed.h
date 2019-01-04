@@ -15,6 +15,7 @@ public:
 private:
   int pin;
   int status;
+  int level;
 };
 
 #endif

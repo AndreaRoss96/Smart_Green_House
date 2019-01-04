@@ -6,7 +6,7 @@
 
 class LevelIndicator {
 public:
-  virtual void setLevel() = 0;
+  virtual void setLevel(int level) = 0;
 
 private:
   int level;
