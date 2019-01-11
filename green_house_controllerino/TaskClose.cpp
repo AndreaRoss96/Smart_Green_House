@@ -5,11 +5,11 @@ TaskClose::TaskClose(ServoTimer2 *servo, LevelIndicator *lp){
   this->lp = lp;
 }
 
-TaskClose::init(int period){
+void TaskClose::init(int period){
   Task::init(period);
 }
 
-TaskClose::updateAndCheckTime(int basePeriod){
+bool TaskClose::updateAndCheckTime(int basePeriod){
   if(GLOBAL_CLASS.isClosing()){
     Task::updateAndCheckTime(basePeriod);
   }else{

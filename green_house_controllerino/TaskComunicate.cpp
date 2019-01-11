@@ -1,7 +1,6 @@
 #include "TaskComunicate.h"
 #include "Light.h"
 
-
 TaskComunicate::TaskComunicate(MsgServiceBT *msgSBT, Light *la, Light *lm){
   this->msgSBT = msgSBT;
   this->la=la;
@@ -13,10 +12,25 @@ void TaskComunicate::init(int period){
 }
 
 void TaskComunicate::tick(){
+  String msg;
   while(MsgService.isMsgAvailable()){
-    msg = MsgService.receiveMsg().getContent();
+    msg = MsgService.receiveMsg()->getContent();
     switch(msg[0]){
       case 'o': {//'o' = open the pump
+        switch(msg[1]){
+          case 'l': {
+            GLOBAL_CLASS.setFlow(GLOBAL_CLASS.getlowflow());
+            break;
+          }
+          case 'm': {
+            GLOBAL_CLASS.setFlow(GLOBAL_CLASS.getmediumflow());
+            break;
+          }
+          case 'h': {
+            GLOBAL_CLASS.setFlow(GLOBAL_CLASS.gethighflow());
+          break;
+          }
+        }
         if(GLOBAL_CLASS.isAutoMode())
           GLOBAL_CLASS.open();
         break;
@@ -27,19 +41,32 @@ void TaskComunicate::tick(){
         break;
       }
       case 'h':{//'h' = set humidity
-        msg.erase(0,1);
-        int h = std::stoi(msg);
+        int h = msg.substring(1).toInt();
         GLOBAL_CLASS.setHumidity(h);
         break;
       }
     }
   }
   if(GLOBAL_CLASS.isConnected()){
-    while(msgSBT.isMsgAvailable()){
-      msg = msgSBT.receiveMsg().getContent();
+    while(msgSBT->isMsgAvailable()){
+      msg = msgSBT->receiveMsg()->getContent();
       switch(msg[0]){
         case 'o': {//'o' = open the pump
           if(!GLOBAL_CLASS.isAutoMode())
+            switch(msg[1]){
+              case 'l': {
+                GLOBAL_CLASS.setFlow(GLOBAL_CLASS.getlowflow());
+                break;
+              }
+              case 'm': {
+                GLOBAL_CLASS.setFlow(GLOBAL_CLASS.getmediumflow());
+                break;
+              }
+              case 'h': {
+                GLOBAL_CLASS.setFlow(GLOBAL_CLASS.gethighflow());
+              break;
+              }
+            }
             GLOBAL_CLASS.open();
           break;
         }
@@ -50,12 +77,13 @@ void TaskComunicate::tick(){
         }
         case 't':{//'t' = changes the mode
           GLOBAL_CLASS.toggleAutomode();
-          La->toggle();
+          la->toggle();
           lm->toggle();
           break;
         }
       }
     }
-    msgSBT.sendMsg("H"+GLOBAL_CLASS.getHumidity);
+    Msg *m = new Msg("H"+GLOBAL_CLASS.getHumidity());
+    msgSBT->sendMsg(*m);
   }
 }

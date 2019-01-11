@@ -1,6 +1,7 @@
 #include "Arduino.h"
 
 #define DIST  0.3
+
 /*
 #define
 #define
@@ -50,6 +51,10 @@ class GlobalClass { //SINGLETON
     int getHumidity(){ return humidity;  }
     bool isAutoMode(){ return automatic;  }
     bool isConnected(){ return connected;  }
+    int getlowflow(){ return 20;  }
+    int gethighflow(){ return 100;  }
+    int getmediumflow(){ return 50;  }
+
 /*
     bool isSearching(){ return searcing; }
     void connectionFound(){ searcing = false; connected = true; }
