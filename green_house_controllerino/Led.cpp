@@ -15,12 +15,12 @@ void Led::switchOn(){
 void Led::switchOff(){
   digitalWrite(pin,LOW);
   this->status = 0;
-};
-
-void toggle(){
-  if(status){
-    this->switchOff();
-  }else{
-    this->switchOn();
-  }
 }
+
+void Led::toggle(){
+  if(this->status == 1){
+    switchOff();
+  }else{
+    switchOn();
+  }
+};
