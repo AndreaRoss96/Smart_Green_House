@@ -1,7 +1,7 @@
 #include "FadingLed.h"
 #include "Arduino.h"
 
-FadingLed::Led(int pin){
+FadingLed::FadingLed(int pin){
   this->pin = pin;
   pinMode(pin,OUTPUT);
   status = 0;
@@ -28,7 +28,7 @@ void FadingLed::toggle(){
 }
 
 void FadingLed::setLevel(int level){
-  if(level < MAX_LVL && level > MIN_LVL){
+  if(level <= MAX_LVL && level >= MIN_LVL){
     this->level = level;
     analogWrite(this->pin, this->level);
   }

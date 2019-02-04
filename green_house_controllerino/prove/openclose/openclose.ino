@@ -23,20 +23,20 @@ void setup() {
   Serial.flush();
 
   ServoTimer2 *servo = new ServoTimer2();
-  servo->attach(PIN2SERVO);
+  servo->attach(PINSERVO);
 
   LevelIndicator *lp = new FadingLed(PINPORT);
 
   Task *open = new TaskOpen(servo, lp);
-  open->init(50);//TODO find the time
+  open->init(5);//TODO find the time
   Task *close = new TaskClose(servo, lp);
-  close->init(150);//TODO find the time
+  close->init(5);//TODO find the time
   Task *wait = new TaskWait();
-  wait->init(250);//TODO find the time
+  wait->init(5);//TODO find the time
 
-  scheduler.init(50);//TODO find the time
+  scheduler.init(25);//TODO find the time
   scheduler.addTask(open);
-  scheduler.addTask(close);
+//  scheduler.addTask(close);
   scheduler.addTask(wait);
 
 
