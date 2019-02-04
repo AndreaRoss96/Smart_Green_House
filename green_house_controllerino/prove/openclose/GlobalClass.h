@@ -1,7 +1,6 @@
+#include "Arduino.h"
 #ifndef __GLOBALCLASS__
 #define __GLOBALCLASS__
-
-#include "Arduino.h"
 
 #define DIST  0.3
 /*
@@ -69,4 +68,5 @@ class GlobalClass { //SINGLETON
     bool isClosing(){ return closing; }
     void close(){ opening = false; closing = true; wait = false; }
 };
+
 #endif
