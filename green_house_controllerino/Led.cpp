@@ -23,4 +23,4 @@ void Led::toggle(){
   }else{
     switchOn();
   }
-};
+}

@@ -7,7 +7,7 @@
 class FadingLed : public LevelIndicator, public Light
 {
 public:
-  Led(int pin);
+  FadingLed(int pin);
   void switchOn();
   void switchOff();
   void setLevel(int lvl);

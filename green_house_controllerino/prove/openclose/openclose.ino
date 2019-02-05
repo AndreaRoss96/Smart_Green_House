@@ -28,11 +28,11 @@ void setup() {
   LevelIndicator *lp = new FadingLed(PINPORT);
 
   Task *open = new TaskOpen(servo, lp);
-  open->init(5);//TODO find the time
+  open->init(50);//TODO find the time
   Task *close = new TaskClose(servo, lp);
-  close->init(5);//TODO find the time
+  close->init(50);//TODO find the time
   Task *wait = new TaskWait();
-  wait->init(5);//TODO find the time
+  wait->init(50);//TODO find the time
 
   scheduler.init(25);//TODO find the time
   scheduler.addTask(open);

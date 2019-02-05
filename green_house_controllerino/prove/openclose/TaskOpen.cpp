@@ -7,11 +7,15 @@ TaskOpen::TaskOpen(ServoTimer2 *servo, LevelIndicator *lp){
 }
 
 bool TaskOpen::updateAndCheckTime(int basePeriod){
-  if(GLOBAL_CLASS.isOpening()){
+  Serial.println("_______do i ever reach this point?_______" );
+
+  if(GLOBAL_CLASS.isOpening() == true){
+    Serial.println(":::::::can OPEN go?:::::::" );
+    Serial.println(GLOBAL_CLASS.isOpening());
     Task::updateAndCheckTime(basePeriod);
   }else{
+    Serial.println("Do i ever get in here?");
     basePeriod = 0;
-
     return false;
   }
 }
@@ -29,7 +33,6 @@ void TaskOpen::tick(){
     lp->setLevel((int)map(GLOBAL_CLASS.getFlow(), 0, 100, MIN_LVL, MAX_LVL ));
   }else{
     Serial.println("else open");
-
-//    GLOBAL_CLASS.done();
+    GLOBAL_CLASS.done();
   }
 }

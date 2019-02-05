@@ -7,7 +7,6 @@ bool TaskWait::updateAndCheckTime(int basePeriod){
   if(GLOBAL_CLASS.isWaiting()){
     Task::updateAndCheckTime(basePeriod);
   }else{
-    basePeriod = 0;
     return false;
   }
 }
@@ -18,13 +17,15 @@ void TaskWait::init(int period){
 }
 
 void TaskWait::tick(){
-  Serial.println(temp);
+  Serial.println("wait");
+
+
   GLOBAL_CLASS.setFlow(temp);
   if(temp != 0){
-//    GLOBAL_CLASS.open();
+    GLOBAL_CLASS.open();
     temp = 0;
   }else{
-//    GLOBAL_CLASS.close();
-    temp = 100;
+    GLOBAL_CLASS.open();
+    temp =100;
   }
 }

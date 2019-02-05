@@ -18,9 +18,11 @@ bool Scheduler::addTask(Task* task){
 
 void Scheduler::schedule(){
   timer.waitForNextTick();
-  Serial.println("ticcccccc");
+  Serial.println("schedule");
   for (int i = 0; i < nTasks; i++){
-    if (taskList[i]->updateAndCheckTime(basePeriod)){
+    bool r = taskList[i]->updateAndCheckTime(basePeriod);
+    Serial.println(r);
+    if (r){
       taskList[i]->tick();
     }
   }

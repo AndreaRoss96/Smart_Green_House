@@ -11,6 +11,7 @@
 #include "Light.h"
 #include "FadingLed.h"
 #include "Sensor.h"
+#include "Scheduler.h"
 #include "ServoTimer2.h"
 #include "Sonar.h"
 
@@ -33,7 +34,7 @@ void setup() {
 
   Serial.begin(BAUD);
   MsgService.init();
-  MsgServiceBT.init();
+  msgServiceBT->init();
   Serial.flush();
 
   ServoTimer2 *servo = new ServoTimer2();
@@ -43,22 +44,22 @@ void setup() {
   Light *lm = new Led(PINMANU);
   LevelIndicator *lp = new FadingLed(PINPORT);
 
-  Task *open = new TaskOpen(servo, lp);
-  open->init(50);//TODO find the time
-  Task *close = new TaskClose(servo, lp);
-  close->init(150);//TODO find the time
-  Task *wait = new TaskWait();
-  wait->init(250);//TODO find the time
-  Task *communicate = new TaskComunicate(msgServiceBT);
+  // Task *open = new TaskOpen(servo, lp);
+  // open->init(50);//TODO find the time
+  // Task *close = new TaskClose(servo, lp);
+  // close->init(150);//TODO find the time
+  // Task *wait = new TaskWait();
+  // wait->init(250);//TODO find the time
+  Task *communicate = new TaskComunicate(msgServiceBT, la, lm, servo, lp);
   communicate->init(100);//TODO find the time
   Task *search = new TaskSearch(prox);
   search->init(50);//TODO find the time
 
 
   scheduler.init(50);//TODO find the time
-  scheduler.addTask(open);
-  scheduler.addTask(close);
-  scheduler.addTask(wait);
+  // scheduler.addTask(open);
+  // scheduler.addTask(close);
+  // scheduler.addTask(wait);
   scheduler.addTask(communicate);
   scheduler.addTask(search);
 }

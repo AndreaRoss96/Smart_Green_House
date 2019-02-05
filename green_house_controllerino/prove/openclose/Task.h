@@ -15,7 +15,7 @@ public:
     timeElapsed = 0;
   }
 
-  bool updateAndCheckTime(int basePeriod){
+  virtual bool updateAndCheckTime(int basePeriod){
     timeElapsed += basePeriod;
     if (timeElapsed >= myPeriod){
       timeElapsed = 0;

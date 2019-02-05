@@ -4,10 +4,9 @@
 TaskOpen::TaskOpen(ServoTimer2 *servo,LevelIndicator *lp){
   this->servo = servo;
   this->lp = lp;
-
 }
 
-TaskOpen::updateAndCheckTime(int basePeriod){
+bool TaskOpen::updateAndCheckTime(int basePeriod){
   if(GLOBAL_CLASS.isOpening()){
     Task::updateAndCheckTime(basePeriod);
   }else{
