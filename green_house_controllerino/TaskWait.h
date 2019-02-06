@@ -8,6 +8,7 @@ class TaskWait: public Task{
     TaskWait();
     void tick();
     void init(int period);
+    bool updateAndCheckTime(int basePeriod);
 
   private:
     int timeElapsed;

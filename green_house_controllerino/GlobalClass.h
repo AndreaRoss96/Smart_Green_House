@@ -1,6 +1,10 @@
+#ifndef __GLOBALCLASS__
+#define __GLOBALCLASS__
+
 #include "Arduino.h"
 
 #define DIST  0.3
+
 /*
 #define
 #define
@@ -36,7 +40,7 @@ class GlobalClass { //SINGLETON
         return gbInstance;
     }
 
-    int getEngagementDist(){
+    float getEngagementDist(){
       return DIST;
     }
 
@@ -50,6 +54,10 @@ class GlobalClass { //SINGLETON
     int getHumidity(){ return humidity;  }
     bool isAutoMode(){ return automatic;  }
     bool isConnected(){ return connected;  }
+    int getlowflow(){ return 20;  }
+    int gethighflow(){ return 100;  }
+    int getmediumflow(){ return 50;  }
+
 /*
     bool isSearching(){ return searcing; }
     void connectionFound(){ searcing = false; connected = true; }
@@ -66,3 +74,4 @@ class GlobalClass { //SINGLETON
     bool isClosing(){ return closing; }
     void close(){ opening = false; closing = true; wait = false; }
 };
+#endif

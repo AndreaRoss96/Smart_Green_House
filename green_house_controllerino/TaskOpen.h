@@ -11,7 +11,7 @@ class TaskOpen: public Task{
     TaskOpen(ServoTimer2 *servo,LevelIndicator *lp);
     void tick();
     void init(int period);
-    bool updateAndCheckTime(int basePeriod){
+    bool updateAndCheckTime(int basePeriod);
 
   private:
     int timeElapsed;

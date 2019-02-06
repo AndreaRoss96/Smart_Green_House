@@ -1,13 +1,12 @@
 #include "TaskOpen.h"
 
 
-TaskOpen::TaskOpen(ServoTimer2 *servo, LevelIndicator *lp){
+TaskOpen::TaskOpen(ServoTimer2 *servo,LevelIndicator *lp){
   this->servo = servo;
   this->lp = lp;
-
 }
 
-TaskOpen::updateAndCheckTime(int basePeriod){
+bool TaskOpen::updateAndCheckTime(int basePeriod){
   if(GLOBAL_CLASS.isOpening()){
     Task::updateAndCheckTime(basePeriod);
   }else{
@@ -15,7 +14,7 @@ TaskOpen::updateAndCheckTime(int basePeriod){
   }
 }
 
-TaskOpen::init(int period){
+void TaskOpen::init(int period){
   Task::init(period);
 }
 

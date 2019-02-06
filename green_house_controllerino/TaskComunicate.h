@@ -16,6 +16,9 @@ class TaskComunicate: public Task{
     int timeElapsed;
     MsgServiceBT *msgSBT;
     Light *la, *lm;
+    void move();
+    ServoTimer2 *servo;
+    LevelIndicator *lp;
 };
 
 #endif
