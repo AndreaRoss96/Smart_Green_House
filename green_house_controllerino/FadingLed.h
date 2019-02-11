@@ -4,8 +4,7 @@
 #include "Light.h"
 #include "LevelIndicator.h"
 
-class FadingLed : public LevelIndicator, public Light
-{
+class FadingLed : public LevelIndicator{
 public:
   FadingLed(int pin);
   void switchOn();

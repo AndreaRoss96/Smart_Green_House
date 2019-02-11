@@ -4,7 +4,10 @@
 #include "Arduino.h"
 
 #define DIST  0.3
-
+#define NOFLOW 0
+#define LOWFLOW 20
+#define MEDIUMFLOW 50
+#define HIGHFLOW 100
 /*
 #define
 #define
@@ -54,24 +57,8 @@ class GlobalClass { //SINGLETON
     int getHumidity(){ return humidity;  }
     bool isAutoMode(){ return automatic;  }
     bool isConnected(){ return connected;  }
-    int getlowflow(){ return 20;  }
-    int gethighflow(){ return 100;  }
-    int getmediumflow(){ return 50;  }
 
-/*
-    bool isSearching(){ return searcing; }
-    void connectionFound(){ searcing = false; connected = true; }
 
-    bool isConnected(){ return connected; }
-    void connectionLost(){ searcing = true; connected = false; }
-*/
-    bool isWaiting(){ return wait; }
-    void done(){ opening = false; closing = false; wait = true; }
 
-    bool isOpening(){ return opening; }
-    void open(){ opening = true; closing = false; wait = false; }
-
-    bool isClosing(){ return closing; }
-    void close(){ opening = false; closing = true; wait = false; }
 };
 #endif

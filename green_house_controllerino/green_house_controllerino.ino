@@ -1,11 +1,8 @@
 #include "MsgServiceBT.h"
 #include "Task.h"
 #include "SoftwareSerial.h"
-#include "TaskOpen.h"
-#include "TaskClose.h"
 #include "TaskComunicate.h"
 #include "TaskSearch.h"
-#include "TaskWait.h"
 #include "LevelIndicator.h"
 #include "Led.h"
 #include "Light.h"
@@ -21,7 +18,7 @@
 #define PINTRIG 13
 #define PINRX 10
 #define PINTX 11
-#define PINPORT 9
+#define PINPORT 6
 #define PINAUTO 8
 #define PINMANU 7
 #define PINSERVO 5
@@ -41,25 +38,19 @@ void setup() {
   servo->attach(PINSERVO);
   Sensor *prox = new Sonar(PINECHO, PINTRIG);
   Light *la = new Led(PINAUTO);
+  la->toggle();
   Light *lm = new Led(PINMANU);
   LevelIndicator *lp = new FadingLed(PINPORT);
+  servo->write(MIN_PULSE_WIDTH);
+  lp->setLevel(MIN_LVL);
 
-  // Task *open = new TaskOpen(servo, lp);
-  // open->init(50);//TODO find the time
-  // Task *close = new TaskClose(servo, lp);
-  // close->init(150);//TODO find the time
-  // Task *wait = new TaskWait();
-  // wait->init(250);//TODO find the time
   Task *communicate = new TaskComunicate(msgServiceBT, la, lm, servo, lp);
-  communicate->init(100);//TODO find the time
-  Task *search = new TaskSearch(prox);
-  search->init(50);//TODO find the time
+  communicate->init(4);//TODO find the time
+  Task *search = new TaskSearch(prox, la, lm);
+  search->init(2);//TODO find the time
 
 
-  scheduler.init(50);//TODO find the time
-  // scheduler.addTask(open);
-  // scheduler.addTask(close);
-  // scheduler.addTask(wait);
+  scheduler.init(1);//TODO find the time
   scheduler.addTask(communicate);
   scheduler.addTask(search);
 }

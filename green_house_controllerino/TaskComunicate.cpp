@@ -13,48 +13,52 @@ void TaskComunicate::init(int period){
   Task::init(period);
 }
 
-void move(){
-  if(servo->read() != (int)map(GLOBAL_CLASS.getFlow(), 0, 100, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH)){
-    this->servo->write((int)map(GLOBAL_CLASS.getFlow(), 0, 100, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH));
-    this->lp->setLevel((int)map(GLOBAL_CLASS.getFlow(), 0, 100, MIN_LVL, MAX_LVL ));
-  }
+
+void TaskComunicate::move(int flow){
+    Serial.println("move!!!!");
+    this->servo->write((int)map(flow, 0, 100, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH));
+    this->lp->setLevel((int)map(flow, 0, 100, MIN_LVL, MAX_LVL));
 }
+
 
 void TaskComunicate::tick(){
   String msg;
+  Serial.println("communicate");
   while(MsgService.isMsgAvailable()){
     msg = MsgService.receiveMsg()->getContent();
     switch(msg[0]){
       case 'l': {
         if(GLOBAL_CLASS.isAutoMode()){
-          GLOBAL_CLASS.setFlow(GLOBAL_CLASS.getlowflow());
+          this->move(LOWFLOW);
+
         }
         break;
       }
       case 'm': {
         if(GLOBAL_CLASS.isAutoMode()){
-          GLOBAL_CLASS.setFlow(GLOBAL_CLASS.getmediumflow());
+          this->move(MEDIUMFLOW);
         }
         break;
       }
       case 'h': {
         if(GLOBAL_CLASS.isAutoMode()){
-          GLOBAL_CLASS.setFlow(GLOBAL_CLASS.gethighflow());
+          this->move(HIGHFLOW);
         }
         break;
       }
       case 'z':{//'z' = close pump
         if(GLOBAL_CLASS.isAutoMode()){
-          GLOBAL_CLASS.setFlow(GLOBAL_CLASS.getNoflow());
+          this->move(NOFLOW);
+
         }
         break;
       }
-      case 'h':{//'h' = set humidity
+      case 'H':{//'H' = set humidity
         int h = msg.substring(1).toInt();
         GLOBAL_CLASS.setHumidity(h);
+
         break;
       }
-      this->move();
     }
   }
   if(GLOBAL_CLASS.isConnected()){
@@ -63,34 +67,49 @@ void TaskComunicate::tick(){
       switch(msg[0]){
         case 'l': {
           if(!GLOBAL_CLASS.isAutoMode())
-            GLOBAL_CLASS.setFlow(GLOBAL_CLASS.getlowflow());
+            this->move(LOWFLOW);
+
+            Serial.println("low");
+
           break;
         }
         case 'm': {
           if(!GLOBAL_CLASS.isAutoMode())
-            GLOBAL_CLASS.setFlow(GLOBAL_CLASS.getmediumflow());
+            this->move(MEDIUMFLOW);
+          Serial.println("medium");
+
           break;
         }
         case 'h': {
           if(!GLOBAL_CLASS.isAutoMode())
-            GLOBAL_CLASS.setFlow(GLOBAL_CLASS.gethighflow());
+            this->move(HIGHFLOW);
+
+            Serial.println("high");
           break;
         }
         case 'z':{//'z' = close pump
           if(!GLOBAL_CLASS.isAutoMode())
-          GLOBAL_CLASS.setFlow(GLOBAL_CLASS.getNoflow());
-          break;
+            this->move(NOFLOW);
+
+            Serial.println("no");
+            break;
         }
         case 't':{//'t' = changes the mode
           GLOBAL_CLASS.toggleAutomode();
+          Serial.println("toggle");
           la->toggle();
           lm->toggle();
           break;
         }
       }
-      this->move();
     }
-    Msg *m = new Msg("" + GLOBAL_CLASS.getHumidity());
+    String s;
+    s.concat( GLOBAL_CLASS.getHumidity());
+    s.concat("-");
+    s.concat( (GLOBAL_CLASS.isAutoMode() ? "a" : "m"));
+    Serial.print("messaggio inviato: ");
+    Serial.println(s);
+    Msg *m = new Msg(s);
     msgSBT->sendMsg(*m);
   }
 }
