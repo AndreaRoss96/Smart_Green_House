@@ -3,20 +3,21 @@
 
 FadingLed::FadingLed(int pin){
   this->pin = pin;
-  pinMode(pin,OUTPUT);
+  analogWrite(this->pin, this->level);
   status = 0;
 }
 
 void FadingLed::switchOn(){
-  digitalWrite(pin,HIGH);
-  status = 1;
   level = MAX_LVL;
+
+  analogWrite(this->pin, this->level);
+  status = 1;
 }
 
 void FadingLed::switchOff(){
+  level = MIN_LVL;
   digitalWrite(pin,LOW);
   status = 0;
-  level = MIN_LVL;
 }
 
 void FadingLed::toggle(){
@@ -28,8 +29,10 @@ void FadingLed::toggle(){
 }
 
 void FadingLed::setLevel(int level){
-  if(level <= MAX_LVL && level >= MIN_LVL){
+  // if(level <= MAX_LVL && level >= MIN_LVL){
+  Serial.println("level fled = ");
+  Serial.println(level);
     this->level = level;
     analogWrite(this->pin, this->level);
-  }
+  // }
 }
