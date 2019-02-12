@@ -11,8 +11,10 @@
 DHTesp dht;
 
 //SSID and Password of WiFi router
-const char* ssid = "Infostrada-2.4GHz-DBB628";
-const char* password = "3206528191569930";
+// const char* ssid = "Infostrada-2.4GHz-DBB628";  //vale's WiFi
+const char* ssid = "Alice Obelix";                 //rosso's WiFi
+// const char* password = "3206528191569930";
+const char* password = "timecapsule";
 
 ESP8266WebServer server(80); //Server port -> 80
 
@@ -27,7 +29,7 @@ void handleADC() {
  int a = analogRead(A0);
 
  String data = "{\"ADC\":\""+String(a)+"\", \"Temperature\":\""+ String(temperature) +"\", \"Humidity\":\""+ String(humidity) +"\"}"; //ADC -> Analog to Digital Converter
-
+// data will be parsed to use it as javaScript's object in the webpage
  digitalWrite(LED,!digitalRead(LED)); //Toggle LED on data request ajax
  server.send(200, "text/plane", data); //Send ADC value, temperature and humidity to client
 
@@ -97,8 +99,10 @@ che deve essere mostrata nel frontend
 
 Il metodo handleADC manda al frontend un messaggio HTTP contenente tutte le informazioni che gli interessano, ovvero la temperatura (°C) e l'umidità (%)
 
-Con la funzione on vengono gestite le richieste GET e POST:
-il seguente esempio è l'equivalente di:
+
+
+Con la funzione on() vengono gestite le richieste GET e POST:
+i seguenti esempi sono equivalenti:
 
 http://<ip address>/led?state=on  --> led ON --> accende il led
 http://<ip address>/led?state=off --> led OFF --> spegne il led
