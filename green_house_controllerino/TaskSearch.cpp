@@ -8,18 +8,18 @@ TaskSearch::TaskSearch(Sensor *prox, Light *la, Light *lm){
 
 void TaskSearch::init(int period){
     Task::init(period);
+
+    /*TODO probably useless*/
     this->connected = GLOBAL_CLASS.isConnected();
 }
 
-//TODO look if you can understand how the bt connetion works
+/*search for something in the engagement zone and sets the connection in response*/
+
 void TaskSearch::tick(){
   Serial.println("search");
   int a = prox->getValue();
   if(!GLOBAL_CLASS.isConnected() &&  a < GLOBAL_CLASS.getEngagementDist()){
     GLOBAL_CLASS.toggleConnection();
-    Serial.println("connection toogled because distance is");
-    Serial.println(prox->getValue() );
-
   }else{
     if (GLOBAL_CLASS.isConnected() && a > GLOBAL_CLASS.getEngagementDist()) {
       GLOBAL_CLASS.toggleConnection();
@@ -28,8 +28,9 @@ void TaskSearch::tick(){
         this->la->switchOn();
         this->lm->switchOff();
       }
-      Serial.println("connection toogled because distance is");
-      Serial.println(prox->getValue() );
     }
   }
 }
+
+/* ricerca una presenza entro la distanza di approccio e nel caso la trovi attiva
+la connessione, nel caso la perda la disattiva e setta la modalità ad automatica*/

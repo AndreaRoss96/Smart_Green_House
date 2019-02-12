@@ -29,10 +29,11 @@ void FadingLed::toggle(){
 }
 
 void FadingLed::setLevel(int level){
-  // if(level <= MAX_LVL && level >= MIN_LVL){
+  /*TODO forse è da cancellare l'if */
+  if(level <= MAX_LVL && level >= MIN_LVL){
   Serial.println("level fled = ");
   Serial.println(level);
     this->level = level;
     analogWrite(this->pin, this->level);
-  // }
+  }
 }

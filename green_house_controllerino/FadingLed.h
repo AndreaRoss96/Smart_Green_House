@@ -4,6 +4,8 @@
 #include "Light.h"
 #include "LevelIndicator.h"
 
+/*fading led uses LevelIndicator as interface */
+
 class FadingLed : public LevelIndicator{
 public:
   FadingLed(int pin);

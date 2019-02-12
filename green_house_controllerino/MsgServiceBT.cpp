@@ -3,29 +3,25 @@
 
 
 MsgServiceBT::MsgServiceBT(int rxPin, int txPin){
-  channel = new SoftwareSerial(rxPin, txPin);
 }
 
 void MsgServiceBT::init(){
   content.reserve(256);
-  channel->begin(9600);
-  channel->print("AT+NAMEgreen");
-  delay(1000);
-  channel->print("AT+ROLE=0");
-  delay(1000);
+  this->channel.begin(9600);
+
 }
 
 bool MsgServiceBT::sendMsg(Msg msg){
-  channel->println(msg.getContent());
+  this->channel.print(msg.getContent());
 }
 
 bool MsgServiceBT::isMsgAvailable(){
-  return channel->available();
+  return this->channel.available();
 }
 
 Msg* MsgServiceBT::receiveMsg(){
-  while (channel->available()) {
-    char ch = (char) channel->read();
+  while (this->channel.available()) {
+    char ch = (char) this->channel.read();
     if (ch == '\n'){
       Msg* msg = new Msg(content);
       content = "";

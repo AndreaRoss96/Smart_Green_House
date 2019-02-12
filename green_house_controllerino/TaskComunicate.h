@@ -15,12 +15,13 @@ class TaskComunicate: public Task{
     void init(int period);
 
   private:
+    void move(int flow);
     int timeElapsed;
     MsgServiceBT *msgSBT;
     Light *la, *lm;
-    void move(int flow);
     ServoTimer2 *servo;
     LevelIndicator *lp;
+    String s;
 };
 
 #endif

@@ -1,9 +1,11 @@
 #include "Timer.h"
 #include "Arduino.h"
 
+/*Class managing Timer0*/
+
 volatile bool timerFlag;
 
-ISR(TIMER1_COMPA_vect){
+ISR(TIMER0_COMPA_vect){
   timerFlag = true;
 }
 
@@ -13,13 +15,13 @@ Timer::Timer(){
 
 /* period in ms */
 void Timer::setupPeriod(int period){
-
+  //TODO
   // disabling interrupt
   cli();
 
-  TCCR1A = 0; // set entire TCCR1A register to 0
-  TCCR1B = 0; // same for TCCR1B
-  TCNT1  = 0; //initialize counter value to 0
+  TCCR0A = 0; // set entire TCCR1A register to 0
+  TCCR0B = 0; // same for TCCR1B
+  TCNT0  = 0; //initialize counter value to 0
 
   /*
    * set compare match register
@@ -28,13 +30,13 @@ void Timer::setupPeriod(int period){
    *
    * assuming a prescaler = 1024 => OCR1A = (16*2^10)* period/1000 (being in ms)
    */
-  OCR1A = 16*1024*period; 
+  OCR0A = 16*1024*period;
   // turn on CTC mode
-  TCCR1B |= (1 << WGM12);
+  TCCR0B |= (1 << WGM01);
   // Set CS11 for 8 prescaler
-  TCCR1B |= (1 << CS12) | (1 << CS10);
+  TCCR0B |= (1 << CS01) | (1 << CS00);
   // enable timer compare interrupt
-  TIMSK1 |= (1 << OCIE1A);
+  TIMSK0 |= (1 << OCIE0A);
 
   // enabling interrupt
   sei();
@@ -47,3 +49,8 @@ void Timer::waitForNextTick(){
   timerFlag = false;
 
 }
+
+/**********************************************
+la classe utilizza le flag del timer 0 in modo da non interferire con il timer 2 del
+servomotore e con il timer la altsoftware serial
+***********************************************/

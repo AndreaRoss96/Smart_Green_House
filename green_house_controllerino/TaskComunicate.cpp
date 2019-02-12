@@ -13,7 +13,8 @@ void TaskComunicate::init(int period){
   Task::init(period);
 }
 
-
+/*used to move a servo.
+it need a number from 0 to 100 */
 void TaskComunicate::move(int flow){
     Serial.println("move!!!!");
     this->servo->write((int)map(flow, 0, 100, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH));
@@ -26,6 +27,7 @@ void TaskComunicate::tick(){
   Serial.println("communicate");
   while(MsgService.isMsgAvailable()){
     msg = MsgService.receiveMsg()->getContent();
+    Serial.println("messaggio da serial " + msg);
     switch(msg[0]){
       case 'l': {
         if(GLOBAL_CLASS.isAutoMode()){
@@ -103,13 +105,36 @@ void TaskComunicate::tick(){
         }
       }
     }
-    String s;
-    s.concat( GLOBAL_CLASS.getHumidity());
-    s.concat("-");
-    s.concat( (GLOBAL_CLASS.isAutoMode() ? "a" : "m"));
+    this->s = "";
+    this->s.concat( GLOBAL_CLASS.getHumidity());
+    this->s.concat("-");
+    if(GLOBAL_CLASS.isAutoMode() ){
+      this->s.concat("a");
+    }else{
+      this->s.concat("m");
+    }
+
     Serial.print("messaggio inviato: ");
     Serial.println(s);
     Msg *m = new Msg(s);
     msgSBT->sendMsg(*m);
   }
 }
+
+/* la funzione tick() è divisa in due sezioni principali:
+la prima controlla i messaggi sulla seriale, a seconda del loro significato e
+dello stato del sistema possono venire interpretati o meno
+la seconda controlla i messaggi sul canale bluetooth se è presente una connessione.
+A seconda del loro significato e dello stato del sistema possono venire
+interpretati o meno.
+sempre se è presente una connessione invia sul canale bluetooth un messaggio
+contenente percentuale di umidità e lo stato del sistema
+
+di seguito il protocollo che abbiamo utilizzato:
+h     - sets high flow
+m     - sets medium flow
+l     - sets low flow
+z     - sets zero flow (close the pump)
+Hxx   - sets the humidity as xx
+t     - toggle the control mode
+xx-y  - sends the humidity and a if automatic mode or b if manual pinMode   */

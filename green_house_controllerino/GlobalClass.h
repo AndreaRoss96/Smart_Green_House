@@ -9,11 +9,8 @@
 #define MEDIUMFLOW 50
 #define HIGHFLOW 100
 /*
-#define
-#define
-#define
-#define
-...... TODO*/
+global class that stores the state of the machine as well as the various constant
+*/
 
 
 class GlobalClass { //SINGLETON
@@ -62,3 +59,7 @@ class GlobalClass { //SINGLETON
 
 };
 #endif
+
+
+/*classe globale che contiene lo stato del sistema e le varie costanti che verranno
+utilizzate lungo tutto il codice, implementa un singleton*/

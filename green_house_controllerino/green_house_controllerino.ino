@@ -16,18 +16,22 @@
 #define BAUD 9600
 #define PINECHO 12
 #define PINTRIG 13
-#define PINRX 10
-#define PINTX 11
+//TODO
+#define PINRX 2
+#define PINTX 3
+
 #define PINPORT 6
 #define PINAUTO 8
 #define PINMANU 7
-#define PINSERVO 5
+#define PINSERVO 11
 
+/*TODO it's not needed for the corruent implementation PINRX PINTX 
 MsgServiceBT *msgServiceBT = new MsgServiceBT(PINRX,PINTX);
-
+*/
 Scheduler scheduler;
 
 void setup() {
+  /*sets up the comunication canal*/
 
   Serial.begin(BAUD);
   MsgService.init();
@@ -45,12 +49,13 @@ void setup() {
   lp->setLevel(MIN_LVL);
 
   Task *communicate = new TaskComunicate(msgServiceBT, la, lm, servo, lp);
-  communicate->init(4);//TODO find the time
+  communicate->init(10000);//TODO find the time
   Task *search = new TaskSearch(prox, la, lm);
-  search->init(2);//TODO find the time
+  search->init(5000);//TODO find the time
 
+  Serial.println("wssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
 
-  scheduler.init(1);//TODO find the time
+  scheduler.init(2500);//TODO find the time
   scheduler.addTask(communicate);
   scheduler.addTask(search);
 }

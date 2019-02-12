@@ -6,6 +6,9 @@
 #include "GlobalClass.h"
 #include "Arduino.h"
 
+/* a generic task, implements init() and updateAndCheckTime() as they have most likely
+always the same behaviour*/
+
 class Task {
   int myPeriod;
   int timeElapsed;

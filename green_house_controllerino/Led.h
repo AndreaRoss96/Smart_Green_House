@@ -2,6 +2,7 @@
 #define __LED__
 
 #include "Light.h"
+/* led class implements the Light interface*/
 
 class Led: public Light {
 public:
