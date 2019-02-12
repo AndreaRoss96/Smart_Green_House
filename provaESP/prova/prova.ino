@@ -122,7 +122,17 @@ String prepareHtmlPage() {
     float h = dht.readHumidity();
     // Read temperature as Celsius (the default)
     float t = dht.readTemperature();
+//nuovo codice da quando funziona
+    float temperature = dht.computerHeatIndex(t, h, false); //false for celsius
+    
+    if (h != NULL || temperature != NULL) { //devono essere inizializzate la prima volta
+      static float newHumidity = h;
+      static float newTemperature = temperature;
+    } 
 
+    
+
+    
   String htmlPage =
      String("HTTP/1.1 200 OK\r\n") +
             "Content-Type: text/html\r\n" +
@@ -131,8 +141,8 @@ String prepareHtmlPage() {
             "\r\n" +
             "<!DOCTYPE HTML>" +
             "<html>" +
-                "<p style=\"color: red;\"> Temperature: " +  String(dht.computeHeatIndex(t, h, false)) + "</p>"
-                "<p style=\"color: blue;\"> Humidity: " + String(h) + "% </p>"
+                "<p style=\"color: red;\"> Temperature: " +  String(newTemperature) + "</p>"
+                "<p style=\"color: blue;\"> Humidity: " + String(newHumidity) + "% </p>"
             "</html>" +
             "\r\n";
   return htmlPage;
@@ -156,7 +166,7 @@ void loop() {
         }
       }
     }
-    delay(1000); // give the web browser time to receive the data
+    delay(250); // give the web browser time to receive the data
 
     // close the connection:
     client.stop();
