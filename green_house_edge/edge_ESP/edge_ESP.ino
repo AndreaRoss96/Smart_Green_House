@@ -29,10 +29,10 @@ void handleRoot() {
 float humidity, temperature;
 
 void handleADC() {
- int a = analogRead(A0);
+ int a = analogRead(A0); //digitalRead
 
  String data = "{\"ADC\":\""+String(a)+"\", \"Temperature\":\""+ String(temperature) +"\", \"Humidity\":\""+ String(humidity) +"\"}"; //ADC -> Analog to Digital Converter
-// data will be parsed to use it as javaScript's object in the webpage
+// data will be parsed to use it as javaScript's object in the webpage -> JSON
  digitalWrite(LED,!digitalRead(LED)); //Toggle LED on data request ajax
  server.send(200, "text/plane", data); //Send ADC value, temperature and humidity to client
 
@@ -55,7 +55,6 @@ void setup() {
   Serial.begin(115200);
   Serial.println();
 
-  // use this instead:
   dht.setup(DHTpin, DHTesp::DHT11); //Connect DHT sensor DHTpin
 
   WiFi.begin(ssid, password);     //Connect to WiFi router
@@ -104,7 +103,7 @@ Il metodo handleADC manda al frontend un messaggio HTTP contenente tutte le info
 
 
 
-Con la funzione on() vengono gestite le richieste GET e POST:
+Con la funzione on() vengono gestite le richieste GET e POST: on(String getRequest, function action)
 i seguenti esempi sono equivalenti:
 
 http://<ip address>/led?state=on  --> led ON --> accende il led

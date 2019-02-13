@@ -25,9 +25,15 @@ public class HttpURLConnectionExample {
 	}
 
 	// HTTP GET request
+	/**
+	 * L'indirizzo ip (tecnicamente) cambia ogni volta che l'ESP si connette alla rete (DHCP)
+	 * Bisognerà utilizzare un form per poter rendere  
+	 * @throws Exception
+	 */
 	private void sendGet() throws Exception {
 
-		String url = "http://192.168.43.23/readADC";
+		//String url = "http://192.168.43.23/"; //read the root page -> edge_ESP.ino > handleRoot()
+		String url = "http://192.168.43.23"; 
 		
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
