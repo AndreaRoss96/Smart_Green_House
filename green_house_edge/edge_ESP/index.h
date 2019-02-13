@@ -152,3 +152,11 @@ function getData() {
 </html>
 
 )=====";
+
+/**************************************************************************
+COMMENTI AI POSTERI
+
+Nel momento in cui la richiesta in GET viene effettuata dal java server la funzione
+'setInterval()' e di conseguenza 'getData()' non sono più utili
+
+**************************************************************************/

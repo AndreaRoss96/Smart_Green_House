@@ -2,7 +2,7 @@
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 
-#include "index.h"   //pagina HTML contenente il javascript
+#include "index.h"   //all'interno ha la pagina HTML contenente il javascript
 #include "DHTesp.h"  //DHT11 library per ESP
 
 #define LED 2        //LED on board
@@ -12,9 +12,12 @@ DHTesp dht;
 
 //SSID and Password of WiFi router
 // const char* ssid = "Infostrada-2.4GHz-DBB628";  //vale's WiFi
-const char* ssid = "Alice Obelix";                 //rosso's WiFi
-// const char* password = "3206528191569930";
-const char* password = "timecapsule";
+// const char* ssid = "Alice Obelix";              //rosso's WiFi
+const char* ssid = "AndroidHotspot3965L";         //rosso's hotspot
+
+// const char* password = "3206528191569930";      //vale's WiFi
+// const char* password = "timecapsule";           //rosso's WiFi
+const char* password = "totocutugno";              //rosso's hotspot
 
 ESP8266WebServer server(80); //Server port -> 80
 
