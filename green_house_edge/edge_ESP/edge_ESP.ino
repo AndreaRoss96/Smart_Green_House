@@ -2,7 +2,7 @@
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 
-#include "index.h"   //pagina HTML contenente il javascript
+#include "index.h"   //all'interno ha la pagina HTML contenente il javascript
 #include "DHTesp.h"  //DHT11 library per ESP
 
 #define LED 2        //LED on board
@@ -12,9 +12,12 @@ DHTesp dht;
 
 //SSID and Password of WiFi router
 // const char* ssid = "Infostrada-2.4GHz-DBB628";  //vale's WiFi
-const char* ssid = "Alice Obelix";                 //rosso's WiFi
-// const char* password = "3206528191569930";
-const char* password = "timecapsule";
+// const char* ssid = "Alice Obelix";              //rosso's WiFi
+const char* ssid = "AndroidHotspot3965L";         //rosso's hotspot
+
+// const char* password = "3206528191569930";      //vale's WiFi
+// const char* password = "timecapsule";           //rosso's WiFi
+const char* password = "totocutugno";              //rosso's hotspot
 
 ESP8266WebServer server(80); //Server port -> 80
 
@@ -26,10 +29,10 @@ void handleRoot() {
 float humidity, temperature;
 
 void handleADC() {
- int a = analogRead(A0);
+ int a = analogRead(A0); //digitalRead
 
  String data = "{\"ADC\":\""+String(a)+"\", \"Temperature\":\""+ String(temperature) +"\", \"Humidity\":\""+ String(humidity) +"\"}"; //ADC -> Analog to Digital Converter
-// data will be parsed to use it as javaScript's object in the webpage
+// data will be parsed to use it as javaScript's object in the webpage -> JSON
  digitalWrite(LED,!digitalRead(LED)); //Toggle LED on data request ajax
  server.send(200, "text/plane", data); //Send ADC value, temperature and humidity to client
 
@@ -52,7 +55,6 @@ void setup() {
   Serial.begin(115200);
   Serial.println();
 
-  // use this instead:
   dht.setup(DHTpin, DHTesp::DHT11); //Connect DHT sensor DHTpin
 
   WiFi.begin(ssid, password);     //Connect to WiFi router
@@ -101,7 +103,7 @@ Il metodo handleADC manda al frontend un messaggio HTTP contenente tutte le info
 
 
 
-Con la funzione on() vengono gestite le richieste GET e POST:
+Con la funzione on() vengono gestite le richieste GET e POST: on(String getRequest, function action)
 i seguenti esempi sono equivalenti:
 
 http://<ip address>/led?state=on  --> led ON --> accende il led
