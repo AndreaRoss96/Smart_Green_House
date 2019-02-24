@@ -18,7 +18,7 @@ it need a number from 0 to 100 */
 void TaskComunicate::move(int flow){
     Serial.println("move!!!!");
     this->servo->write((int)map(flow, 0, 100, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH));
-    this->lp->setLevel((int)map(flow, 0, 100, MIN_LVL, MAX_LVL));
+  //  this->lp->setLevel((int)map(flow, 0, 100, MIN_LVL, MAX_LVL));
 }
 
 
@@ -66,6 +66,7 @@ void TaskComunicate::tick(){
   if(GLOBAL_CLASS.isConnected()){
     while(msgSBT->isMsgAvailable()){
       msg = msgSBT->receiveMsg()->getContent();
+      Serial.println("messaggio da BT " + msg);
       switch(msg[0]){
         case 'l': {
           if(!GLOBAL_CLASS.isAutoMode())
@@ -104,20 +105,21 @@ void TaskComunicate::tick(){
           break;
         }
       }
-    }
-    this->s = "";
-    this->s.concat( GLOBAL_CLASS.getHumidity());
-    this->s.concat("-");
+    }/*
+    String s = new String();
+    s.concat(GLOBAL_CLASS.getHumidity());
+    s.concat( "-");
     if(GLOBAL_CLASS.isAutoMode() ){
-      this->s.concat("a");
+      s.concat("a");
     }else{
-      this->s.concat("m");
+      s.concat("m");
     }
 
-    Serial.print("messaggio inviato: ");
+    Serial.println("messaggio inviato: ");
     Serial.println(s);
+    delayMicroseconds(5000);
     Msg *m = new Msg(s);
-    msgSBT->sendMsg(*m);
+    msgSBT->sendMsg(*m);*/
   }
 }
 

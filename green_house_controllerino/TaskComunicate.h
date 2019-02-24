@@ -21,7 +21,6 @@ class TaskComunicate: public Task{
     Light *la, *lm;
     ServoTimer2 *servo;
     LevelIndicator *lp;
-    String s;
 };
 
 #endif

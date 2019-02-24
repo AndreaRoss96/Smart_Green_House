@@ -2,8 +2,9 @@
 #define __MSGSERVICEBT__
 
 #include "Arduino.h"
-#include <AltSoftSerial.h>
+#include <NeoSWSerial.h>
 #include "MsgService.h"
+// #include "SoftwareSerial.h"
 
 /* Message service throught BT using AltSoftSerial on timer 1*/
 
@@ -18,12 +19,16 @@ public:
 
 private:
   String content;
-  AltSoftSerial channel;
-
+  // AltSoftSerial altSoftSerial;
+  // AltSoftSerial *channel;
+  NeoSWSerial *channel;
+  // SoftwareSerial *channel;
 };
 /*l'utilizzo del timer uno è derivato dall'uso degli altri due timer per
 servomotore (timer 2) e scheduler (timer 0).
-non viene utilizzata la SoftwareSerial perchè creava problemi con il blocco degli interrupt*/
+non viene utilizzata la SoftwareSerial perchè creava problemi con il blocco degli interrupt
+NB altsoftware serial utilizza di default i pin 8 e 9 e disabilita il pin 10 vedi l'internet
+*/
 
 /*this declaration already exist in another class*/
 /*
