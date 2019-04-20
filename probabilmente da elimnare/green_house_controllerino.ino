@@ -36,9 +36,7 @@ void setup() {
   Serial.flush();
   MsgService.init();
   msgServiceBT->init();
-  Serial.flush();
-  Serial.println("wssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
-
+  Serial.println("iciacso");
   ServoTimer2 *servo = new ServoTimer2();
   servo->attach(PINSERVO);
   Sensor *prox = new Sonar(PINECHO, PINTRIG);
@@ -48,15 +46,13 @@ void setup() {
   LevelIndicator *lp = new FadingLed(PINPORT);
   servo->write(MIN_PULSE_WIDTH);
   lp->setLevel(MIN_LVL);
-  Serial.println("wssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
 
   Task *communicate = new TaskComunicate(msgServiceBT, la, lm, servo, lp);
   communicate->init(1000);//TODO find the time
   Task *search = new TaskSearch(prox, la, lm);
   search->init(500);//TODO find the time
 
-  Serial.println("wssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
-
+  la->switchOn();
   scheduler.init(250);//TODO find the time
   scheduler.addTask(communicate);
   scheduler.addTask(search);
@@ -64,6 +60,5 @@ void setup() {
 
 void loop(){
   scheduler.schedule();
-  freeMemory();
   Serial.flush();
 }

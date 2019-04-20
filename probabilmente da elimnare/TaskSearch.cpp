@@ -16,8 +16,9 @@ void TaskSearch::init(int period){
 /*search for something in the engagement zone and sets the connection in response*/
 
 void TaskSearch::tick(){
-  Serial.println("search");
+  Serial.print("search:   dist = ");
   int a = prox->getValue();
+  Serial.println(a);
   if(!GLOBAL_CLASS.isConnected() &&  a < GLOBAL_CLASS.getEngagementDist()){
     GLOBAL_CLASS.toggleConnection();
   }else{
