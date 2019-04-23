@@ -9,8 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.support.v7.app.AppCompatActivity;
+import java.lang.String;
+import android.text.method.ScrollingMovementMethod;
 
 import org.w3c.dom.Text;
 
@@ -32,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        TextView textView = (TextView) findViewById(R.id.chatLabel);
+        textView.setMovementMethod(new ScrollingMovementMethod());
 
         final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -54,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.sendBtn).setOnClickListener(new View.OnClickListener() {
+        /*findViewById(R.id.sendBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String message = ((EditText)findViewById(R.id.editText)).getText().toString();
@@ -62,35 +70,50 @@ public class MainActivity extends AppCompatActivity {
                 ((EditText)findViewById(R.id.editText)).setText("");
 
             }
-        });
-        findViewById(R.id.auto).setOnClickListener(new View.OnClickListener() {
+        });*/
+        findViewById(R.id.toogle).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 btChannel.sendMessage("t");         //cliccando sul pulsante automatic invia la stringa 't' di toggle
-            }
-        });
-        findViewById(R.id.man).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btChannel.sendMessage("t");         //cliccando sul pulsante automatic invia la stringa 't' di toggle
+               /* TextView m = (TextView)findViewById(R.id.textMode);
+                mode = !mode;
+                final RadioGroup rg1 = (RadioGroup)findViewById(R.id.radio);
+                if(!mode){
+                    for(int i = 0; i < rg1.getChildCount(); i++){
+                        ((RadioButton)rg1.getChildAt(i)).setEnabled(false);
+                        ((RadioButton)rg1.getChildAt(i)).setChecked(false);
+                    }
+                }else{
+                    for(int i = 0; i < rg1.getChildCount(); i++){
+                        ((RadioButton)rg1.getChildAt(i)).setEnabled(true);
+                        ((RadioButton)rg1.getChildAt(i)).setChecked(false);
+                    }
+                }
+                m.setText("Mode: ".concat(mode ? "manual" : "automatic"));*/
             }
         });
         findViewById(R.id.low).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btChannel.sendMessage("l");         //cliccando sul pulsante low invia la stringa 'l' di toggle
+                btChannel.sendMessage("l");         //cliccando sul pulsante low invia la stringa 'l'
             }
         });
         findViewById(R.id.medium).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btChannel.sendMessage("m");         //cliccando sul pulsante medium invia la stringa 'm' di toggle
+                btChannel.sendMessage("m");         //cliccando sul pulsante medium invia la stringa 'm'
             }
         });
         findViewById(R.id.high).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btChannel.sendMessage("h");         //cliccando sul pulsante high invia la stringa 'h' di toggle
+                btChannel.sendMessage("h");         //cliccando sul pulsante high invia la stringa 'h'
+            }
+        });
+        findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btChannel.sendMessage("z");         //cliccando sul pulsante close invia la stringa 'z' di zero
             }
         });
     }
@@ -131,7 +154,30 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onMessageReceived(String receivedMessage) {
                          TextView hum = (TextView)findViewById(R.id.humidity);
-                         hum.setText(receivedMessage.concat(" % humidity"));
+                         final TextView m = (TextView)findViewById(R.id.textMode);
+                         final Button toogle = (Button) findViewById(R.id.toogle);
+                         String value="";
+                         final RadioGroup rg1 = (RadioGroup)findViewById(R.id.radio);
+                         for(int i=0;i<receivedMessage.indexOf("-");i++){
+                             value = value.concat(receivedMessage.charAt(i)+"");
+                             m.setText("Mode:".concat(value));
+                             if(receivedMessage.substring(receivedMessage.indexOf("-")+1,receivedMessage.length()-1).equals("a")){
+                                 m.setText("Mode: ".concat("automatic"));
+                                 toogle.setText("MANUAL");
+                                 for(int j = 0; j < rg1.getChildCount(); j++){
+                                     ((RadioButton)rg1.getChildAt(j)).setEnabled(false);
+                                     ((RadioButton)rg1.getChildAt(j)).setChecked(false);
+                                 }
+                             }else{
+                                 m.setText("Mode: ".concat("manual"));
+                                 toogle.setText("AUTOMATIC");
+                                 for(int j = 0; j < rg1.getChildCount(); j++){
+                                     ((RadioButton)rg1.getChildAt(j)).setEnabled(true);
+                                 }
+                             }
+                         }
+
+                         hum.setText(value.concat("% humidity"));
                         ((TextView) findViewById(R.id.chatLabel)).append(String.format("> [RECEIVED from %s] %s\n",
                                 btChannel.getRemoteDeviceName(),
                                 receivedMessage));
