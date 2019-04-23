@@ -1,11 +1,12 @@
 #ifndef __LEVELINDICATOR__
 #define __LEVELINDICATOR__
 
+//TODO probabilmente è poco indicato lascire questa macro qui
 #define MAX_LVL 255
 #define MIN_LVL 0
 
-/* This inerface represents a level indicator where you can set the level beetwen
-a MAX_LVL and a MIN_LVL*/
+/* Interfaccia che rappresenta un indicatore di livello dove tra un
+minimo (MIN_LVL) e un massimo (MAX_LVL)*/
 
 class LevelIndicator {
 public:

@@ -1,7 +1,7 @@
 #ifndef __LIGHT__
 #define __LIGHT__
 
-/* a classical light interface */
+/* Interfaccia light classica */
 
 class Light {
 public:

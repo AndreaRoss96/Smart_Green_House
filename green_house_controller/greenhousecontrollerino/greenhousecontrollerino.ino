@@ -24,7 +24,11 @@
 #define PINMANU 7
 #define PINSERVO 2
 
-Scheduler scheduler ;
+Scheduler scheduler;
+
+/*
+Parte principale del programma, inizializza i vari componenti e li fa interagire
+*/
 
 void setup(){
   Serial.begin(BAUD);

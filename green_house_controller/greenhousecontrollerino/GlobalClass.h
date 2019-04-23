@@ -9,8 +9,9 @@
 #define MEDIUMFLOW 50
 #define HIGHFLOW 100
 /*
-global class that stores the state of the machine as well as the various constant
-*/
+Classe globale in singleton che contiene le informazioni generali del sistema
+come umidita, flow (livello di apertura della pompa), modalità del sistema
+manuale o automatica) e le costanti del sistema sotto forma di macro */
 
 
 class GlobalClass { //SINGLETON
@@ -24,12 +25,6 @@ class GlobalClass { //SINGLETON
       int humidity = 0;
       bool connected = false;
 
-      bool searching = true;
-      bool wait = true;
-      bool opening = false;
-      bool closing = false;
-
-
   public:
     /*
     return
@@ -40,16 +35,13 @@ class GlobalClass { //SINGLETON
         return gbInstance;
     }
 
-    float getEngagementDist(){
-      return DIST;
-    }
 
     void setFlow(int f){ flow = f; }
     void setHumidity(int h){ humidity = h; }
     void toggleAutomode(){ automatic = !automatic;}
     void toggleConnection(){ connected = !connected; }
 
-
+    float getEngagementDist(){ return DIST;   } //TODO
     int getFlow(){ return flow;  }
     int getHumidity(){ return humidity;  }
     bool isAutoMode(){ return automatic;  }
@@ -59,7 +51,3 @@ class GlobalClass { //SINGLETON
 
 };
 #endif
-
-
-/*classe globale che contiene lo stato del sistema e le varie costanti che verranno
-utilizzate lungo tutto il codice, implementa un singleton*/

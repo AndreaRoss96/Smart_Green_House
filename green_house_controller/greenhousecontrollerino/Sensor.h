@@ -3,7 +3,7 @@
 
 #include "Arduino.h"
 
-/* a generic Sensor that can return a single value */
+/*Interfaccia di un sensore che restituide un singolo valore float*/
 
 class Sensor {
 public:
