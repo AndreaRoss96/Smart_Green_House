@@ -3,8 +3,8 @@
 
 
 MsgServiceBT::MsgServiceBT(int rxPin, int txPin){
-   SoftwareSerial SWSerial (rxPin, txPin);
-   this->channel = &SWSerial;
+    // SoftwareSerial SWSerial(rxPin, txPin);
+    this->channel = new SoftwareSerial(rxPin, txPin);
 }
 
 void MsgServiceBT::init(){
@@ -12,8 +12,10 @@ void MsgServiceBT::init(){
   this->channel->begin(9600);
 }
 
-bool MsgServiceBT::sendMsg(Msg msg){
-  this->channel->print(msg.getContent());
+bool MsgServiceBT::sendMsg(Msg *msg){
+  Serial.println("sto inviando");
+  this->channel->print(msg->getContent());
+  Serial.println(msg->getContent());
 }
 
 bool MsgServiceBT::isMsgAvailable(){

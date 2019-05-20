@@ -18,16 +18,17 @@ void TaskComunicate::init(int period){
 }
 
 void TaskComunicate::move(){
-  Serial.println("move");
+  Serial.println("move" );
   this->lp->setLevel(map(GLOBAL_CLASS.getFlow(),0,100, MIN_LVL, MAX_LVL));
   this->servo->write(map(GLOBAL_CLASS.getFlow(),0,100, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH));
 }
 
 void TaskComunicate::tick(){
-  String msg;
-  Serial.println("comm");
   if(MsgService.isMsgAvailable()){
-    msg = MsgService.receiveMsg()->getContent();
+    Msg *a;
+    a = MsgService.receiveMsg();
+    String msg;
+    msg = a->getContent();
     switch (msg[0]) {
       case 'l':{
         if(GLOBAL_CLASS.isAutoMode()){
@@ -63,10 +64,13 @@ void TaskComunicate::tick(){
         break;
       }
     }
+    delete(a);
   }
   if(GLOBAL_CLASS.isConnected()){
     if(msgSBT->isMsgAvailable()){
-      msg = msgSBT->receiveMsg()->getContent();
+      Msg *a;
+      a = msgSBT->receiveMsg();
+      String msg = a->getContent();
       switch (msg[0]) {
         case 'l':{
           if(!GLOBAL_CLASS.isAutoMode()){
@@ -103,7 +107,11 @@ void TaskComunicate::tick(){
           break;
         }
       }
+      delete(a);
     }
-  msgSBT.sendMsg(new Msg("A-H" + GLOBAL_CLASS.getHumidity()))
+    String cio = (String(GLOBAL_CLASS.getHumidity()) + "-");
+    Msg *m = new Msg(cio + (GLOBAL_CLASS.isAutoMode() ? "a":"m"));
+    msgSBT->sendMsg(m);
+    delete(m);
   }
 }

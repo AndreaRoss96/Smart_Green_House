@@ -16,13 +16,13 @@
 #define PINECHO 12
 #define PINTRIG 13
 
-#define PINRX 4
-#define PINTX 5
+#define PINRX 7
+#define PINTX 6
 
-#define PINPORT 6
+#define PINPORT 5
 #define PINAUTO 8
-#define PINMANU 7
-#define PINSERVO 2
+#define PINMANU 2
+#define PINSERVO 4
 
 Scheduler scheduler;
 
@@ -48,6 +48,7 @@ void setup(){
   LevelIndicator *lp = new FadingLed(PINPORT);
 
   MsgServiceBT *msgServiceBT = new MsgServiceBT(PINRX, PINTX);
+  msgServiceBT->init();
   MsgService.init();
   servo->attach(PINSERVO);
   servo->write(MIN_PULSE_WIDTH);
@@ -56,9 +57,9 @@ void setup(){
   Task *search = new TaskSearch(prox, la, lm);
   Task *comunicate = new TaskComunicate(msgServiceBT, la, lm, servo, lp);
 
-  comunicate->init(100);
-  search->init(500);
-  scheduler.init(250);
+  comunicate->init(1000);
+  search->init(1000);
+  scheduler.init(500);
   scheduler.addTask(comunicate);
   scheduler.addTask(search);
 }
