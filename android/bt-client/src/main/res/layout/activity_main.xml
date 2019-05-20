@@ -26,29 +26,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <Button
-            android:id="@+id/sendBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="SEND" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
         android:orientation="vertical">
 
         <LinearLayout
@@ -57,17 +34,11 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/auto"
-                android:layout_width="183dp"
-                android:layout_height="wrap_content"
-                android:text="AUTOMATIC" />
-
-            <Button
-                android:id="@+id/man"
-                android:layout_width="50dp"
+                android:id="@+id/toogle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="MANUAL" />
+                android:text="AUTOMATIC" />
 
         </LinearLayout>
 
@@ -80,8 +51,9 @@
         android:orientation="vertical">
 
         <RadioGroup
+            android:id="@+id/radio"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <RadioButton
                 android:id="@+id/low"
@@ -101,21 +73,14 @@
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="high" />
+
+            <RadioButton
+                android:id="@+id/close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="close" />
         </RadioGroup>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/chatLabel"
-            android:layout_width="match_parent"
-            android:layout_height="132dp"
-            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -130,6 +95,26 @@
             android:layout_width="match_parent"
             android:layout_height="46dp"
             android:text="% humidity" />
+
+        <TextView
+            android:id="@+id/textMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/chatLabel"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_weight="1"
+            android:fadeScrollbars="true"
+            android:scrollbars="vertical" />
     </LinearLayout>
 
 </LinearLayout>
