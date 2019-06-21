@@ -1,0 +1,36 @@
+.button{
+	-fx-background-color: darkgreen;
+	-fx-border-color: white;
+	-fx-border-radius: 3;
+	-fx-border-width: 3;
+	-fx-text-fill: white;
+	-fx-min-width: 100;
+	
+}
+
+.button:hoover{
+	-fx-background-color: #000000;
+	-fx-border-color: #FFFFFF;
+	-fx-border-radius: 3;
+	-fx-border-width: 3;
+	-fx-text-fill: white;
+	-fx-min-width: 100;
+	
+}
+
+
+.root{
+	-fx-background: green;
+	-fx-background-size: 30% 30%;
+    -fx-background-repeat: no-repeat;
+  	-fx-background-position: bottom center;
+}
+
+.label{
+	-fx-color: #8C714B;
+	-fx-font-size: 16;
+}
+
+.title{
+	-fx-font-size: 24;
+}
