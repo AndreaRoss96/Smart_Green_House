@@ -5,6 +5,9 @@
 #include "Sensor.h"
 #include "Light.h"
 
+/*task che controlla se l'utente è abbastanza vicino da potersi
+* connettere con il bluetooth
+*/
 class TaskSearch: public Task{
   public:
     TaskSearch(Sensor *prox, Light *la, Light *lm);

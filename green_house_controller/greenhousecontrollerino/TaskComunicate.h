@@ -8,6 +8,9 @@
 #include "ServoTimer2.h"
 #include "LevelIndicator.h"
 
+/*Task per la comunicazione tramite seriale e tramite bluetooth,
+*  gestisce anche l'apertura e la chiusura in base ai messaggi che riceve
+*/
 class TaskComunicate: public Task{
   public:
     TaskComunicate(MsgServiceBT *msgSBT, Light *la, Light *lm, ServoTimer2 *servo, LevelIndicator *lp);

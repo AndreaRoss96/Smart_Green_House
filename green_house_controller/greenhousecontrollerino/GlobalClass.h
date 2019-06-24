@@ -41,7 +41,7 @@ class GlobalClass { //SINGLETON
     void toggleAutomode(){ automatic = !automatic;}
     void toggleConnection(){ connected = !connected; }
 
-    float getEngagementDist(){ return DIST;   } //TODO
+    float getEngagementDist(){ return DIST;   } 
     int getFlow(){ return flow;  }
     int getHumidity(){ return humidity;  }
     bool isAutoMode(){ return automatic;  }

@@ -5,9 +5,8 @@
 #include "LevelIndicator.h"
 
 /*fadingled è un indicatore di livello che implementa l'interfaccia
-LevelIndicator, comprende anche tutti i metodi della classe light
-(TODO purtroppo non mi è chiaro come implementare una ereditarietà multipla)*/
-
+* LevelIndicator
+*/
 class FadingLed : public LevelIndicator{
 public:
   FadingLed(int pin);
