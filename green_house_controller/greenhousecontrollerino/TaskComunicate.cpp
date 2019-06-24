@@ -18,19 +18,30 @@ void TaskComunicate::init(int period){
 }
 
 void TaskComunicate::move(){
-  //Serial.println("move" );
   this->lp->setLevel(map(GLOBAL_CLASS.getFlow(),0,100, MIN_LVL, MAX_LVL));
   this->servo->write(map(GLOBAL_CLASS.getFlow(),0,100, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH));
 }
 
 void TaskComunicate::tick(){
+
+  /*controlla la presenza di messaggi sulla seriale e li considera solo nel caso
+  * l'arduino sia in modalità automatica, eccetto l'umidità che viene aggiornata sempre
+  * utilizza il seguente protocollo:
+  * invio di messaggi:
+  *   xx-a = xx umidità nell'aria - modalità automatica
+  *   xx-m = xx umidità
+  * ricezione messaggi:
+  *   l = low (portata bassa)
+  *   m = medium (portata media)
+  *   h = high (portata alta)
+  *   z = zero (portata nulla)
+  *   Hxx = Humidity, xx indicata l'umidità nell'aria
+  */
   if(MsgService.isMsgAvailable()){
     Msg *a;
-    Serial.println("vaffanculo");
     a = MsgService.receiveMsg();
     String msg;
     msg = a->getContent();
-    MsgService.sendMsg("--:" + msg +":--" );
     switch (msg[0]) {
       case 'l':{
         if(GLOBAL_CLASS.isAutoMode()){
@@ -73,7 +84,6 @@ void TaskComunicate::tick(){
       Msg *a;
       a = msgSBT->receiveMsg();
       String msg = a->getContent();
-      //Serial.println("messaggio da BT " + msg);
 
       switch (msg[0]) {
         case 'l':{
