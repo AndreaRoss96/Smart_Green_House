@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onMessageReceived(String receivedMessage) {
                          TextView hum = (TextView)findViewById(R.id.humidity);
+                        TextView textView = (TextView) findViewById(R.id.chatLabel);
                          final TextView m = (TextView)findViewById(R.id.textMode);
                          final Button toogle = (Button) findViewById(R.id.toogle);
                          String value="";
