@@ -13,9 +13,9 @@ void MsgServiceBT::init(){
 }
 
 bool MsgServiceBT::sendMsg(Msg *msg){
-  Serial.println("sto inviando");
+  //Serial.println("sto inviando");
   this->channel->print(msg->getContent());
-  Serial.println(msg->getContent());
+  //Serial.println(msg->getContent());
 }
 
 bool MsgServiceBT::isMsgAvailable(){

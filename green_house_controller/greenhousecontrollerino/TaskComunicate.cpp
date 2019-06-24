@@ -18,7 +18,7 @@ void TaskComunicate::init(int period){
 }
 
 void TaskComunicate::move(){
-  Serial.println("move" );
+  //Serial.println("move" );
   this->lp->setLevel(map(GLOBAL_CLASS.getFlow(),0,100, MIN_LVL, MAX_LVL));
   this->servo->write(map(GLOBAL_CLASS.getFlow(),0,100, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH));
 }
@@ -26,9 +26,11 @@ void TaskComunicate::move(){
 void TaskComunicate::tick(){
   if(MsgService.isMsgAvailable()){
     Msg *a;
+    Serial.println("vaffanculo");
     a = MsgService.receiveMsg();
     String msg;
     msg = a->getContent();
+    MsgService.sendMsg("--:" + msg +":--" );
     switch (msg[0]) {
       case 'l':{
         if(GLOBAL_CLASS.isAutoMode()){
@@ -71,6 +73,8 @@ void TaskComunicate::tick(){
       Msg *a;
       a = msgSBT->receiveMsg();
       String msg = a->getContent();
+      //Serial.println("messaggio da BT " + msg);
+
       switch (msg[0]) {
         case 'l':{
           if(!GLOBAL_CLASS.isAutoMode()){
@@ -89,7 +93,7 @@ void TaskComunicate::tick(){
         case 'm':{
           if(!GLOBAL_CLASS.isAutoMode()){
             GLOBAL_CLASS.setFlow(MEDIUMFLOW);
-            this->move();
+              this->move();
           }
           break;
         }

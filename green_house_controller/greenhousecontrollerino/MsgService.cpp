@@ -37,6 +37,8 @@ void serialEvent() {
   /* reading the content */
   while (Serial.available()) {
     char ch = (char) Serial.read();
+    Serial.print(ch );
+
     if (ch == '\n'){
       MsgService.currentMsg = new Msg(content);
       MsgService.msgAvailable = true;
