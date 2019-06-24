@@ -29,7 +29,6 @@ void FadingLed::toggle(){
 }
 
 void FadingLed::setLevel(int level){
-  /*TODO forse è da cancellare l'if */
   if(level <= MAX_LVL && level >= MIN_LVL){
   delayMicroseconds(5000);
   delayMicroseconds(5000);

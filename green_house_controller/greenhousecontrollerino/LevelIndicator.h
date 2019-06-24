@@ -1,7 +1,6 @@
 #ifndef __LEVELINDICATOR__
 #define __LEVELINDICATOR__
 
-//TODO probabilmente è poco indicato lascire questa macro qui
 #define MAX_LVL 255
 #define MIN_LVL 0
 

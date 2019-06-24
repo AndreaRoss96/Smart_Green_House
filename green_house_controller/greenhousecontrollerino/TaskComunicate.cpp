@@ -22,10 +22,7 @@ void TaskComunicate::move(){
   this->servo->write(map(GLOBAL_CLASS.getFlow(),0,100, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH));
 }
 
-void TaskComunicate::tick(){
-
-  /*controlla la presenza di messaggi sulla seriale e li considera solo nel caso
-  * l'arduino sia in modalità automatica, eccetto l'umidità che viene aggiornata sempre
+  /*Controlla la presenza di messaggi.
   * utilizza il seguente protocollo:
   * invio di messaggi:
   *   xx-a = xx umidità nell'aria - modalità automatica
@@ -36,6 +33,12 @@ void TaskComunicate::tick(){
   *   h = high (portata alta)
   *   z = zero (portata nulla)
   *   Hxx = Humidity, xx indicata l'umidità nell'aria
+  */
+void TaskComunicate::tick(){
+
+  /*Controlla la presenza di messaggi sulla seriale.
+  * sulla seriale e li considera solo nel caso il sistema sia in modalità
+  * automatica, eccetto l'umidità che viene aggiornata sempre.
   */
   if(MsgService.isMsgAvailable()){
     Msg *a;
@@ -79,6 +82,10 @@ void TaskComunicate::tick(){
     }
     delete(a);
   }
+  /*Controlla la presenza di messaggi sulla software seriale
+  * e li considera solo nel caso il sistema sia connesso e in modalità manuale,
+  * eccetto il messaggio di toggle della modalità.
+  */
   if(GLOBAL_CLASS.isConnected()){
     if(msgSBT->isMsgAvailable()){
       Msg *a;
