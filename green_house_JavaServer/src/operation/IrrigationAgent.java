@@ -70,4 +70,8 @@ public class IrrigationAgent extends BasicEventLoopController {
 			this.dh.insertPumpAction(CLOSE_PUMP + "watchdog expired");
 		}
 	}
+	
+	public DataHistory getHistory() {
+		return this.dh;
+	}
 }

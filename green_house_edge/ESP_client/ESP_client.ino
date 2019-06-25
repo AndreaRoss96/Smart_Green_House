@@ -106,71 +106,73 @@ Qui le informazioni vengono mandate e bona
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WiFiMulti.h>
+#include <DHTesp.h>
 
-const char* host = "192.168.43.144";
+#define DHT_PIN 2    //D4 dell'ESP --> GPIO14
+
 const char* ssid = "AndroidHotspot3965L";         //rosso's hotspot
 const char* password = "totocutugno";         //rosso's hotspot
+const char* address = "http://9a924b8a.ngrok.io";
 const int port = 8080;
 const int watchdog = 5000;
 unsigned long previousMillis = millis();
 
 ESP8266WiFiMulti wifiMulti;
 HTTPClient http;
+DHTesp dht;
 
 void setup() {
-  Serial.begin(115200);
-  delay(10);
+    Serial.begin(115200);
+    dht.setup(DHT_PIN, DHTesp::DHT11); //Connect DHT sensor DHTpin
+    WiFi.begin(ssid, password);
 
-  // We start by connecting to a WiFi network
-  wifiMulti.addAP(ssid, password);
+    // Wait for connection
+    Serial.print("Connecting...");
+    while (WiFi.status() != WL_CONNECTED) {
+      delay(500);
+      Serial.print(".");
+    }
 
-  Serial.println("Connecting Wifi...");
-  if(wifiMulti.run() == WL_CONNECTED) {
+    //If connection successful show IP address in serial monitor
     Serial.println("");
-    Serial.println("WiFi connected");
-    Serial.println("IP address: ");
-    Serial.print(WiFi.localIP());
-  }
-  Serial.setDebugOutput(true);
+    Serial.print("Connected to ");
+    Serial.println(ssid);
+    Serial.print("IP address: ");
+    Serial.println(WiFi.localIP());  //IP address assigned to ESP
+
+    Serial.setDebugOutput(true);
 
 }
 
-int value = 0;
+int sendData(String address, float value, String label){
+    HTTPClient http;
+    http.begin(address + "/api/humidity");
+    http.addHeader("Content-Type", "application/json");
+    String msg =
+        String("{ \"value\" ") + String(value) + "\" }";
+    Serial.println(msg);
+
+    int retCode = http.POST(msg);
+    http.end();
+
+    String payload = http.getString();
+    Serial.println(payload);
+    return retCode;
+}
 
 void loop() {
-  unsigned long currentMillis = millis();
-
-  if ( currentMillis - previousMillis > watchdog ) {
-    previousMillis = currentMillis;
-
-    if(wifiMulti.run() != WL_CONNECTED) {
-      Serial.println("!!");
-    } else {
-      Serial.println("WiFi connected");
-      Serial.println("IP address: ");
-      Serial.println(WiFi.localIP());
-
-      String url = "/watchdog?command=watchdog&uptime=";
-      url += String(millis());
-      url += "&ip=";
-      url += WiFi.localIP().toString();
-
-      Serial.print("connecting to ");
-      Serial.println(host);
-      Serial.print("Requesting URL: ");
-      Serial.println(url);
-
-      http.begin(host,port,url);
-      int httpCode = http.GET();
-      if (httpCode) {
-        if (httpCode == 200) {
-          String payload = http.getString();
-          Serial.println(payload);
-        }
+    if (WiFi.status()== WL_CONNECTED){
+      int humidity = analogRead(DHT_PIN);
+      Serial.println("Humidity: " + String(humidity));
+      int code = sendData(address, humidity, "Humidity");
+      /* log result */
+      if (code == 200){
+        Serial.println("ok");
+      } else {
+        Serial.println("error");
       }
-      Serial.println("closing connection");
-      http.end();
-      WiFi.disconnect();
+    } else {
+      Serial.println("Error in WiFi connection");
     }
-  }
+    delay(2000);
 }

@@ -27,6 +27,7 @@ import history.DataHistory;
  * --> Vertx  create an HttpServer, where is possible to read all the useful
  * information: humidity (get the humidity and reads informationsended by post method), 
  * pump action (close/open), with the date of action.
+ * 
  */
 public class DataService extends AbstractVerticle {
 
