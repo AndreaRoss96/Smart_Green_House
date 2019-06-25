@@ -1,7 +1,7 @@
 package operation;
 
 public enum PumpFlow {
-    Pmin("l"), Pmed("m"), Pmax("h"), Off("z");
+    Pmin("l"), Pmed("m"), Pmax("h"), Zero("z");
 
     private String value;
 
