@@ -9,7 +9,7 @@ public interface DataHistory {
 	
 	void insertPumpAction(String action);	// to know if the pump is been open or closed
 	
-	ArrayList<Pair<Float, Date>> getHumidity();	// Get humidity information
+	ArrayList<Pair<Float, Date>> getHumidityHistory();	// Get humidity information
 	
 	ArrayList<Pair<String, Date>> getPumpHistory();	// Get pump information
 	

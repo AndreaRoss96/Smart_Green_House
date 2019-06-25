@@ -20,7 +20,7 @@ public class DataHistoryImpl implements DataHistory {
 	}
 
 	@Override
-	public ArrayList<Pair<Float, Date>> getHumidity() {
+	public ArrayList<Pair<Float, Date>> getHumidityHistory() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -2,9 +2,7 @@
 <classpath>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/orazi/Desktop/Filippo/uni/IoT/progetto_3/smart_green_house/green_house_JavaServer/lib/jssc.jar"/>
 	<classpathentry kind="lib" path="lib/vertx-core-3.7.1.jar"/>
-	<classpathentry kind="lib" path="/java/jSSC-2.8.0-Release/jssc.jar"/>
 	<classpathentry kind="lib" path="lib/vertx-web-3.7.1.jar"/>
 	<classpathentry kind="lib" path="lib/vertx-web-client-3.7.1.jar"/>
 	<classpathentry kind="lib" path="lib/jssc.jar"/>

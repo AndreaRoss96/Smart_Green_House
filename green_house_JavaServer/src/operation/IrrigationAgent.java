@@ -19,14 +19,15 @@ public class IrrigationAgent extends BasicEventLoopController {
 	
 	private static final int T_max = 5000; // Watchdog to terminate pump flow
 	private static final boolean False = false;
+	//messages
+	private static final String OPEN_PUMP = "The pump has been opened";
+	private static final String CLOSE_PUMP = "The pump has been closed";
+	private static final String HUMIDITY_LEVEL = ", the humidity level is:";
+	
 	private ScheduledFuture<?> currentTimer;
-	
 	private ObservableDelay delay;
-	
 	private DataHistory dh = new DataHistoryImpl();
-	
 	private CommChannel serialChannel;
-	private PumpFlow enumPump;
 	private boolean isOpen = False;
 	
 	public void init(CommChannel serialChannel) {
@@ -40,25 +41,33 @@ public class IrrigationAgent extends BasicEventLoopController {
 		if (ev instanceof MsgEvent) {
 			float uLevel = Float.parseFloat(((MsgEvent) ev).getMsg()); // humidity level
 			dh.insertHumidity(uLevel);			
-			if(uLevel < U_min && !isOpen) {
+			if(uLevel <= U_min && !isOpen) {
 				//humidity under recommended level --> open pump with Y l/min
 				if (uLevel < LOW) {
 					//P_max
-					this.serialChannel.sendMsg(this.enumPump.Pmax.getValue());
-				} else if (uLevel >= LOW && uLevel < MED) {
+					this.serialChannel.sendMsg(PumpFlow.Pmax.getValue());
+				} else if(uLevel >= LOW && uLevel < MED) {
 					//P_med
-					this.serialChannel.sendMsg(this.enumPump.Pmed.getValue());
+					this.serialChannel.sendMsg(PumpFlow.Pmed.getValue());
 				} else if (uLevel >= MED && uLevel < HIGH) {
 					//P_min
-					this.serialChannel.sendMsg(this.enumPump.Pmin.getValue());
+					this.serialChannel.sendMsg(PumpFlow.Pmin.getValue());
 				}
 				this.currentTimer = this.delay.scheduleTick(T_max);
+				this.isOpen = true;
+				this.dh.insertPumpAction(OPEN_PUMP + HUMIDITY_LEVEL + "uLevel");
+			} else if (uLevel > U_min + DELTA_U && isOpen) {
+				this.serialChannel.sendMsg(PumpFlow.Zero.getValue());
+				this.isOpen = false;
+				this.dh.insertPumpAction(CLOSE_PUMP + HUMIDITY_LEVEL + "uLevel");
+				this.currentTimer.cancel(true);
 			}
 			this.serialChannel.sendMsg("H" + uLevel);
 		} else if (ev instanceof TickEvent) {
-			//zero
+			//watchdog timer expired, irrigation time ended
+			this.serialChannel.sendMsg(PumpFlow.Zero.getValue());
+			this.isOpen = false;
+			this.dh.insertPumpAction(CLOSE_PUMP + "watchdog expired");
 		}
-		
 	}
-
 }
