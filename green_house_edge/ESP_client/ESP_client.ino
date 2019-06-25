@@ -141,7 +141,6 @@ void setup() {
     Serial.println(WiFi.localIP());  //IP address assigned to ESP
 
     Serial.setDebugOutput(true);
-
 }
 
 int sendData(String address, float value, String label){
