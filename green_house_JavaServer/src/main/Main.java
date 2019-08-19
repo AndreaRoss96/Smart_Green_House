@@ -9,8 +9,8 @@ import operation.IrrigationAgent;
 public class Main {
 	
 	private static final int RATE = 9600;
-	private static final String ARDUINO_PORT = "COM5"; // PORT where Arduino is plugged
-	private static final int DATA_PORT = 800;
+	private static final String ARDUINO_PORT = "COM7"; // PORT where Arduino is plugged
+	private static final int DATA_PORT = 8080;
 
 	public static void main(String[] args) throws Exception {
 		final CommChannel serialComm = new SerialCommChannel(ARDUINO_PORT, RATE);
@@ -20,9 +20,12 @@ public class Main {
 		irrigation.start();
 		
 		final DataService dataService = new DataService(DATA_PORT, irrigation, irrigation.getHistory());
-		
-		final Vertx vertx = Vertx.vertx();
-		vertx.deployVerticle(dataService);
+		try {
+			Vertx vertx = Vertx.vertx();
+			vertx.deployVerticle(dataService);
+		} catch (Exception e) {
+			System.out.println("bestia");
+		}
 	}
 
 }

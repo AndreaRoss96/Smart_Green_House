@@ -102,6 +102,7 @@ public class DataService extends AbstractVerticle {
 	}
 	
 	private void sendError(int statusCode, HttpServerResponse response) {
+		System.out.println("ERROR: status code: " + statusCode + " -- response: " + response);
 		response.setStatusCode(statusCode).end();
 	}
 
