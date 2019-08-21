@@ -11,10 +11,10 @@ Qui le informazioni vengono mandate e bona
 
 #define DHT_PIN 2    //D4 dell'ESP --> GPIO14
 
-const char* ssid = "AndroidHotspot3965L";         //rosso's hotspot
-const char* password = "totocutugno";         //rosso's hotspot
-const char* address = "http://eb10774d.ngrok.io";
-const int port = 8080;
+const char* ssid = "Alice Obelix";         //rosso's hotspot
+const char* password = "timecapsule";         //rosso's hotspot
+const char* address = "http://b3b63751.ngrok.io";
+/*const int port = 8080;*/
 const int watchdog = 5000;
 unsigned long previousMillis = millis();
 
@@ -62,7 +62,8 @@ int sendData(String address, float value, String label){
 
 void loop() {
     if (WiFi.status()== WL_CONNECTED){
-     // int humidity = dht.getHumidity();
+      // int humidity = dht.getHumidity();
+      // Variable for potentiometer below
       float sensorValue = analogRead(A0);
       float humidity = map(sensorValue, 0, 1023, 0, 100);
       Serial.println("Humidity: " + String(humidity));

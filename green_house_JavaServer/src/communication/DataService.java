@@ -11,6 +11,11 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import operation.BasicEventLoopController;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,7 +52,7 @@ public class DataService extends AbstractVerticle {
 		Router router = Router.router(vertx);
 		router.route().handler(BodyHandler.create());
 		router.post("/api/humidity").handler(this::handleDataHumidityReading);
-		router.post("/api/humidity").handler(this::handleGetHumidityHistory);
+		router.get("/api/humidity").handler(this::handleGetHumidityHistory);
 		router.get("/api/pump").handler(this::handleGetPumpHistory);		
 		vertx
 			.createHttpServer()
@@ -68,6 +73,11 @@ public class DataService extends AbstractVerticle {
 			MsgEvent msg = new MsgEvent(String.valueOf(humidity));
 			this.IrrigationAgent.notifyEvent(msg);
 			log("DataHumidityReading -- humidity value: " + humidity);
+			try {
+				save(String.valueOf(humidity));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -108,5 +118,11 @@ public class DataService extends AbstractVerticle {
 
 	private void log(String msg) {
 		System.out.println("[DATA SERVICE] "+msg);
+	}
+	
+	private void save(String msg) throws IOException {
+		final BufferedWriter bw = new BufferedWriter(new FileWriter(new File("/humid.txt"), true));
+        bw.append(Instant.now() + " " + msg + "\n");
+        bw.close();
 	}
 }
