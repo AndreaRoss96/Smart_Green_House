@@ -51,17 +51,17 @@ public class EventLoopControllerImpl extends BasicEventLoopController {
 				switch (state) {
 				case MANUAL:
 					if (ev instanceof MsgEvent) {
-						if (((MsgEvent) ev).getMsg().equals("Start")) {
+						if (((MsgEvent) ev).getMsg().equals("o")) {
 							//memorizza l'apertura della pompa
 							save("START PUMP -> ARDUINO");
 							log("arduino opened the pomp");
 							pump.setOpen();
-						} else if (((MsgEvent) ev).getMsg().equals("Stop")) {
+						} else if (((MsgEvent) ev).getMsg().equals("c")) {
 							//memorizza la chiusura della pompa
 							save("CLOSE PUMP -> ARDUINO");
 							log("arduino closed the pomp");
 							pump.setClose();
-						} else if (((MsgEvent) ev).getMsg().equals("ManOut")) {
+						} else if (((MsgEvent) ev).getMsg().equals("0")) {
 							//memorizza il cambio di modalità da manuale ad automatico
 							save("AUTO MODE -> ARDUINO");
 							log("AUTO MODE");
@@ -70,7 +70,7 @@ public class EventLoopControllerImpl extends BasicEventLoopController {
 					}
 					break;
 				case AUTO:
-					if (ev instanceof MsgEvent && ((MsgEvent) ev).getMsg().equals("ManIn")) {
+					if (ev instanceof MsgEvent && ((MsgEvent) ev).getMsg().equals("1")) {
 						//memorizza il cambio di modalità da automatico a manuale
 						save("MANUAL MODE -> ARDUINO");
 						state = State.MANUAL;
@@ -113,7 +113,7 @@ public class EventLoopControllerImpl extends BasicEventLoopController {
 		} else if (humidity >= 10 && humidity < 20) {
 			msg += "m";
 		} else {
-			msg += "h";
+			msg += "l";
 		}
 		msgService.sendMsg(msg);
 	}
