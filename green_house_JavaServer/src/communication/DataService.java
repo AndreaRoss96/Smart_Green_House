@@ -51,9 +51,9 @@ public class DataService extends AbstractVerticle {
 	public void start() {		
 		Router router = Router.router(vertx);
 		router.route().handler(BodyHandler.create());
-		router.post("/api/humidity").handler(this::handleDataHumidityReading);
-		router.get("/api/humidity").handler(this::handleGetHumidityHistory);
-		router.get("/api/pump").handler(this::handleGetPumpHistory);		
+		router.post("/api/data").handler(this::handleDataHumidityReading);
+//		router.get("/api/humidity").handler(this::handleGetHumidityHistory);
+//		router.get("/api/pump").handler(this::handleGetPumpHistory);		
 		vertx
 			.createHttpServer()
 			.requestHandler(router::accept)
@@ -67,6 +67,7 @@ public class DataService extends AbstractVerticle {
 		HttpServerResponse response = routingContext.response();
 		JsonObject res = routingContext.getBodyAsJson();
 		if (res == null) {
+			System.out.println("null send error");
 			sendError(400, response);
 		} else {
 			float humidity = res.getFloat("Humidity"); //Get the float value with the specified key

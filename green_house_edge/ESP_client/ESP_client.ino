@@ -11,9 +11,9 @@ Qui le informazioni vengono mandate e bona
 
 #define DHT_PIN 2    //D4 dell'ESP --> GPIO14
 
-const char* ssid = "Alice Obelix";         //rosso's hotspot
-const char* password = "timecapsule";         //rosso's hotspot
-const char* address = "http://b3b63751.ngrok.io";
+const char* ssid = "AndroidHotspot3965L";         //rosso's hotspot
+const char* password = "totocutugno";         //rosso's hotspot
+const char* address = "http://f183e7da.ngrok.io";
 /*const int port = 8080;*/
 const int watchdog = 5000;
 unsigned long previousMillis = millis();
@@ -46,10 +46,10 @@ void setup() {
 
 int sendData(String address, float value, String label){
     HTTPClient http;
-    http.begin(address + "/api/humidity");
+    http.begin(address + "/api/data");
     http.addHeader("Content-Type", "application/json");
-    String msg =
-        String("{ value ") + String(value) + " }";
+    String msg = String(value);
+        //String("{ value ") + String(value) + " }";
     Serial.println(msg);
 
     int retCode = http.POST(msg);
