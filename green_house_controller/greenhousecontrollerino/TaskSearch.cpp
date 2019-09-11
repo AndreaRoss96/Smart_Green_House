@@ -11,9 +11,7 @@ void TaskSearch::init(int period){
 }
 
 void TaskSearch::tick(){
-  Serial.print("searching....");
   float a = this->prox->getValue();
-  Serial.println(a);
   if(!GLOBAL_CLASS.isConnected() && a < GLOBAL_CLASS.getEngagementDist()){
     GLOBAL_CLASS.toggleConnection();
   }else{
