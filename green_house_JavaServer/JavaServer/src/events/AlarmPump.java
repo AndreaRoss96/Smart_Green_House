@@ -1,4 +1,4 @@
-
+package events;
 
 public class AlarmPump implements Event {
 	private int umidita;

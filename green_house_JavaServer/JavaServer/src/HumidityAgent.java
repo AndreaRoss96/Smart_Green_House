@@ -1,3 +1,6 @@
+import events.AlarmPump;
+import events.DonePump;
+import events.LogUm;
 
 public class HumidityAgent extends Observable{
 	private enum State{REGULAR,IRRIGATION,MANUALE};

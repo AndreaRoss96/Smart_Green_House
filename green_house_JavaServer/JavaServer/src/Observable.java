@@ -1,5 +1,7 @@
 import java.util.LinkedList;
 
+import events.Event;
+
 public class Observable {
 	
 	private LinkedList<Observer> observers;

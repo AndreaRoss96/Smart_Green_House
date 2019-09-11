@@ -4,6 +4,8 @@
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+import events.Event;
+
 public abstract class BasicEventLoopController extends Thread implements Observer {
 	
 	public static final int defaultEventQueueSize = 50;

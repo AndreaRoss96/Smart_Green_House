@@ -1,4 +1,5 @@
-
+package events;
+import Pump;
 
 public class StopPump implements Event {
 	private Pump source;

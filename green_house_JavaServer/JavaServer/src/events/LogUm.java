@@ -1,4 +1,4 @@
-
+package events;
 
 public class LogUm implements Event {
 	private int um;

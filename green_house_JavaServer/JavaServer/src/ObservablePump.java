@@ -1,4 +1,5 @@
-
+import events.StartPump;
+import events.StopPump;
 
 public class ObservablePump extends Observable implements Pump {
 
