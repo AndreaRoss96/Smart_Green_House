@@ -14,8 +14,8 @@ public class EventLoopControllerImpl extends BasicEventLoopController {
 	};
 
 	private State state;
-	private MsgService monitor;
-	private ObservablePump pump;
+	private MsgService msgService;
+	private PumpImpl pump;
 	private HumidityAgent hAgent;
 
 	/**
@@ -23,66 +23,72 @@ public class EventLoopControllerImpl extends BasicEventLoopController {
 	 * 
 	 * @throws IOException
 	 */
-	public EventLoopControllerImpl(final MsgService monitor, final ObservablePump pump, final HumidityAgent hAgent)
+	public EventLoopControllerImpl(final MsgService monitor, final PumpImpl pump, final HumidityAgent hAgent)
 			throws IOException {
 		save("[TURNING ON]");
 		this.pump = pump;
-		this.monitor = monitor;
+		this.msgService = monitor;
 		this.hAgent = hAgent;
 
 		monitor.addObserver(this);
-		pump.addObserver(this);
 		hAgent.addObserver(this);
 	}
 
 	@Override
 	protected void processEvent(Event ev) {
 		try {
-			if (ev instanceof MsgEvent) {
-				if (((MsgEvent) ev).getMsg().equals("Start")) {
-					save("START PUMP -> ARDUINO");
-				} else if (((MsgEvent) ev).getMsg().equals("Stop")) {
-					save("CLOSE PUMP -> ARDUINO");
-				} else if (((MsgEvent) ev).getMsg().equals("StopT")) {
-					save("OVERTIME PUMP -> ARDUINO");
-					monitor.notifyEvent(new OvertimePump());
-				} else if (((MsgEvent) ev).getMsg().equals("ManIn")) {
-					save("MANUAL MODE -> ARDUINO");
-					monitor.notifyEvent(new ManualMode());
-				} else if (((MsgEvent) ev).getMsg().equals("ManOut")) {
-					save("AUTO MODE -> ARDUINO");
-					monitor.notifyEvent(new AutoMode());
-				}
-			} else if (ev instanceof StartPump) {
-				monitor.sendMsg(((StartPump) ev).getMessage());
-			} else if (ev instanceof StopPump) {
-				monitor.sendMsg("Stop");
-			} else if (ev instanceof LogUm) {
-				monitor.sendMsg("Umidita:" + ((LogUm) ev).getUm());
+			/*
+			 * manda un messaggio all'arduino in caso di modifica dell'umidità con lo schema
+			 * Hxx dove xx è il numero percentuale dell'umidità
+			 */
+			if (ev instanceof LogUm) {
+				msgService.sendMsg("H" + ((LogUm) ev).getUm());
 			} else {
+				/* 
+				 * altrimenti in caso di modalitàmanuale esegue dei controlli ed in caso di
+				 * modalità automatica ne esegue altri
+				 */
 				switch (state) {
 				case MANUAL:
-					if (ev instanceof AutoMode && state != State.AUTO) {
-						state = State.AUTO;
-						hAgent.setRegular();
-						log("AUTO MODE");
+					if (ev instanceof MsgEvent) {
+						if (((MsgEvent) ev).getMsg().equals("Start")) {
+							//memorizza l'apertura della pompa
+							save("START PUMP -> ARDUINO");
+							log("arduino opened the pomp");
+							pump.setOpen();
+						} else if (((MsgEvent) ev).getMsg().equals("Stop")) {
+							//memorizza la chiusura della pompa
+							save("CLOSE PUMP -> ARDUINO");
+							log("arduino closed the pomp");
+							pump.setClose();
+						} else if (((MsgEvent) ev).getMsg().equals("ManOut")) {
+							//memorizza il cambio di modalità da manuale ad automatico
+							save("AUTO MODE -> ARDUINO");
+							log("AUTO MODE");
+							state = State.AUTO;
+						}
 					}
 					break;
 				case AUTO:
-					if (ev instanceof ManualMode && state != State.MANUAL) {
+					if (ev instanceof MsgEvent && ((MsgEvent) ev).getMsg().equals("ManIn")) {
+						//memorizza il cambio di modalità da automatico a manuale
+						save("MANUAL MODE -> ARDUINO");
 						state = State.MANUAL;
 						hAgent.setManual();
 						log("MANUAL MODE");
 					} else if (ev instanceof AlarmPump) {
-						pump.setOpen(((AlarmPump) ev).getU());
-						log("Pump Open");
+						//apre la pompa
+						this.openPump(((AlarmPump) ev).getU());
 					} else if (ev instanceof DonePump) {
-						pump.setClose();
+						//chiude la pompa
+						this.closePump();
 						log("Pump Close");
 					} else if (ev instanceof OvertimePump) {
-						pump.overtimeClose();
+						//chiude la pompa in overtime
+						pump.setClose();
 						hAgent.setRegular();
 						log("Overtime Pump Close");
+						closePump();
 					}
 					break;
 				}
@@ -90,6 +96,26 @@ public class EventLoopControllerImpl extends BasicEventLoopController {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+	/*chiude la pompa e invia il messaggio ad arduino*/
+	private void closePump() {
+		pump.setClose();		
+		msgService.sendMsg("z");
+	}
+
+	/*apre la pompa e invia il messaggio ad arduino*/
+	private void openPump(int humidity) {
+		pump.setOpen();
+		log("Pump Open");
+		String msg = new String();
+		if(humidity < 10) {
+			msg += "h";
+		} else if (humidity >= 10 && humidity < 20) {
+			msg += "m";
+		} else {
+			msg += "h";
+		}
+		msgService.sendMsg(msg);
 	}
 
 	private void log(String msg) {

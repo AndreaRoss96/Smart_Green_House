@@ -9,7 +9,7 @@ public class Main {
     	final EventLoopControllerImpl gh;
 //        final GreenHouseController ghc;
         final HumidityAgent hAgent = new HumidityAgent();
-        ObservablePump pump = new ObservablePump();
+        PumpImpl pump = new PumpImpl();
         MsgService msgService;
 		
 		String port = "COM7"; /* replace with the name of the serial port */
