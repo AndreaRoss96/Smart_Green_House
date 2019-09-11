@@ -1,3 +1,4 @@
+import events.MsgEvent;
 
 public class MsgService extends Observable {
 	private CommChannel channel;
