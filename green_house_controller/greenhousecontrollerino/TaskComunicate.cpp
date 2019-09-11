@@ -33,6 +33,11 @@ void TaskComunicate::move(){
   *   h = high (portata alta)
   *   z = zero (portata nulla)
   *   Hxx = Humidity, xx indicata l'umidità nell'aria
+  * invio messaggi al server:
+  *   o = pompa aperta (open)
+  *   c = pompa chiusa (portata nulla)
+  *   0 = modalità automatica
+  *   1 = modalità manuale
   */
 void TaskComunicate::tick(){
 
@@ -97,6 +102,7 @@ void TaskComunicate::tick(){
           if(!GLOBAL_CLASS.isAutoMode()){
             GLOBAL_CLASS.setFlow(LOWFLOW);
             this->move();
+            Serial.println("o");
           }
           break;
         }
@@ -104,6 +110,7 @@ void TaskComunicate::tick(){
           if(!GLOBAL_CLASS.isAutoMode()){
             GLOBAL_CLASS.setFlow(HIGHFLOW);
             this->move();
+            Serial.println("o");
           }
           break;
         }
@@ -111,6 +118,7 @@ void TaskComunicate::tick(){
           if(!GLOBAL_CLASS.isAutoMode()){
             GLOBAL_CLASS.setFlow(MEDIUMFLOW);
               this->move();
+              Serial.println("o");
           }
           break;
         }
@@ -118,6 +126,7 @@ void TaskComunicate::tick(){
           if(!GLOBAL_CLASS.isAutoMode()){
             GLOBAL_CLASS.setFlow(NOFLOW);
             this->move();
+            Serial.println("c");
           }
           break;
         }
@@ -125,6 +134,7 @@ void TaskComunicate::tick(){
           GLOBAL_CLASS.toggleAutomode();
           la->toggle();
           lm->toggle();
+          Serial.println("" + GLOBAL_CLASS.isAutoMode() ? "0": "1");
           break;
         }
       }
