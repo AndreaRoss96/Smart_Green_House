@@ -25,8 +25,8 @@ void TaskComunicate::move(){
   /*Controlla la presenza di messaggi.
   * utilizza il seguente protocollo:
   * invio di messaggi:
-  *   xx-a = xx umidità nell'aria - modalità automatica
-  *   xx-m = xx umidità
+  *   xx-a = xx umidità - modalità automatica
+  *   xx-m = xx umidità - modalità manuale
   * ricezione messaggi:
   *   l = low (portata bassa)
   *   m = medium (portata media)
