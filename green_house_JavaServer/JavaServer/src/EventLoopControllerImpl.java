@@ -125,7 +125,7 @@ public class EventLoopControllerImpl extends BasicEventLoopController {
 	}
 
 	private void save(String msg) throws IOException {
-		final BufferedWriter bw = new BufferedWriter(new FileWriter(new File("output/log.txt"), true));
+		final BufferedWriter bw = new BufferedWriter(new FileWriter(new File("log.txt"), true));
 		bw.append(Instant.now() + " " + msg + "\n");
 		bw.close();
 	}

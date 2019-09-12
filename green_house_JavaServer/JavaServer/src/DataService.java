@@ -1,8 +1,4 @@
-
-
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Vertx;
-import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
@@ -14,17 +10,15 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 /*
  * Data Service as a vertx event-loop 
  */
 public class DataService extends AbstractVerticle{
 
-	private int port;
-	private HumidityAgent hAgent;
-	public DataService(int port,final HumidityAgent hAgent) {		
+	private final int port;
+	private final HumidityAgent hAgent;
+	public DataService(final int port, final HumidityAgent hAgent) {		
 		this.port = port;
 		this.hAgent = hAgent;
 	}
@@ -44,17 +38,22 @@ public class DataService extends AbstractVerticle{
 	}
 	
 	private void handleAddNewData(RoutingContext routingContext) {
+		System.out.println("before _response_");
 		HttpServerResponse response = routingContext.response();
+		System.out.println("before get json");
 		JsonObject res = routingContext.getBodyAsJson();
+		System.out.println("before if(res)");
 		if (res == null) {
+			System.out.println("Ti piacerebbe");
 			sendError(400, response);
 		} else {
-			if(res.getInteger("umidita") != null) {
+			System.out.println("Eccolo" + res.toString());
+			if(res.getInteger("Humidity") != null) {
 				try {
-					log(res.getInteger("umidita").toString());
-					save(res.getInteger("umidita").toString());
-					hAgent.sendUmMsg(res.getInteger("umidita"));
-					hAgent.checkMin(res.getInteger("umidita"));
+					log(res.getInteger("Humidity").toString());
+					save(res.getInteger("Humidity").toString());
+					hAgent.sendUmMsg(res.getInteger("Humidity"));
+					hAgent.checkMin(res.getInteger("Humidity"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

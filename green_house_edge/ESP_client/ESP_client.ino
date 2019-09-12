@@ -6,7 +6,7 @@
 
 char* ssid = "AndroidHotspot3965L";
 char* password = "totocutugno";
-char* address = "http://c46cbdb8.ngrok.io";
+char* address = "http://a0d8b9dc.ngrok.io";
 
 DHTesp dht;
 
@@ -32,7 +32,7 @@ int sendData(String address, float value){
    http.begin(address + "/api/data");      
    http.addHeader("Content-Type", "application/json");     
    String msg = 
-   String("{\"umidita\":") + String(value) + "}";
+   String("{\"Humidity\":") + String(value) + "}";
    int retCode = http.POST(msg);   
    http.end();  
    Serial.print(msg);
@@ -43,7 +43,7 @@ void loop() {
  if (WiFi.status()== WL_CONNECTED){   
    // int humidity = dht.getHumidity();
    float sensorValue = analogRead(A0);
-   float humidity = map(sensorValue, 0, 1023, 0, 100);
+   int humidity = map(sensorValue, 0, 1023, 0, 100);
    /* send data */
    Serial.print("sending "+String(humidity)+"...");    
    int code = sendData(address, humidity);
@@ -56,6 +56,6 @@ void loop() {
  } else { 
    Serial.println("Error in WiFi connection");   
  }
- delay(1000);  
+ delay(10000);  
  
 }
