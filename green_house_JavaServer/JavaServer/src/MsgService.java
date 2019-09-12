@@ -22,6 +22,7 @@ public class MsgService extends Observable {
 		}
 		
 		new Thread(() -> {
+			System.out.println("Message service is listening");
 			while (true) {
 				try {
 					if(channel.isMsgAvailable()) {

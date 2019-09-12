@@ -6,7 +6,7 @@
 
 char* ssid = "AndroidHotspot3965L";
 char* password = "totocutugno";
-char* address = "http://a0d8b9dc.ngrok.io";
+char* address = "http://3645eaec.ngrok.io";
 
 DHTesp dht;
 

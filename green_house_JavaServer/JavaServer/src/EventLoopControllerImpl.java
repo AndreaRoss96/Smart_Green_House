@@ -18,6 +18,7 @@ public class EventLoopControllerImpl extends BasicEventLoopController {
 	private MsgService msgService;
 	private PumpImpl pump;
 	private HumidityAgent hAgent;
+	private ObservableTimer timer;
 
 	/**
 	 * Costruttore che inizializza il radar allo stato di IDLE.
@@ -30,13 +31,16 @@ public class EventLoopControllerImpl extends BasicEventLoopController {
 		this.pump = pump;
 		this.msgService = monitor;
 		this.hAgent = hAgent;
+		this.timer = new ObservableTimer(this.pump);
 
-		monitor.addObserver(this);
-		hAgent.addObserver(this);
+		this.msgService.addObserver(this);
+		this.hAgent.addObserver(this);
+		this.timer.addObserver(this);
 	}
 
 	@Override
 	protected void processEvent(Event ev) {
+		System.out.println("Process Event");
 		try {
 			/*
 			 * manda un messaggio all'arduino in caso di modifica dell'umidità con lo schema
@@ -118,6 +122,11 @@ public class EventLoopControllerImpl extends BasicEventLoopController {
 			msg += "l";
 		}
 		msgService.sendMsg(msg);
+		/*Parte il thread per il controlle dell'overtime*/
+		timer.init();
+		
+		
+		
 	}
 
 	private void log(String msg) {
