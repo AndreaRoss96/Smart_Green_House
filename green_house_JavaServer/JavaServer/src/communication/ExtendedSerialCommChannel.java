@@ -1,13 +1,14 @@
-package common;
+package communication;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.*;
+
 import jssc.*;
 
 /**
- * Comm channel implementation based on serial port. - Lab 4.2
+ * Comm channel implementation based on serial port.
  * 
  * @author aricci
  *
@@ -18,7 +19,7 @@ public class ExtendedSerialCommChannel implements CommChannel, SerialPortEventLi
 	private BlockingQueue<String> queue;
 	private StringBuffer currentMsg = new StringBuffer("");
 	private int localIPportEmu;
-	private static final int SERVER_PORT = 8085;
+	private static final int SERVER_PORT = 8080;
 	
 	private AndroidEmulatorCommChannel androidEmulatorChannel;
 	private static final char BT_MESSAGES_ID = '$';

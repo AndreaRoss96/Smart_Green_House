@@ -1,3 +1,4 @@
+package controller;
 import events.*;
 import java.io.BufferedWriter;
 
@@ -7,7 +8,7 @@ import java.io.IOException;
 import java.time.Instant;
 
 /**
- * Manages all messages recieved by classes and contains saves.
+ * Manages all messages received by classes and contains saves.
  */
 public class EventLoopControllerImpl extends BasicEventLoopController {
 	private enum State {
@@ -17,7 +18,7 @@ public class EventLoopControllerImpl extends BasicEventLoopController {
 	private State state;
 	private MsgService msgService;
 	private PumpImpl pump;
-	private HumidityAgent hAgent;
+	private ObservableHumidityAgent hAgent;
 	private ObservableTimer timer;
 
 	/**
@@ -25,7 +26,7 @@ public class EventLoopControllerImpl extends BasicEventLoopController {
 	 * 
 	 * @throws IOException
 	 */
-	public EventLoopControllerImpl(final MsgService monitor, final PumpImpl pump, final HumidityAgent hAgent)
+	public EventLoopControllerImpl(final MsgService monitor, final PumpImpl pump, final ObservableHumidityAgent hAgent)
 			throws IOException {
 		save("[TURNING ON]");
 		this.pump = pump;
@@ -82,9 +83,9 @@ public class EventLoopControllerImpl extends BasicEventLoopController {
 						state = State.MANUAL;
 						hAgent.setManual();
 						log("MANUAL MODE");
-					} else if (ev instanceof AlarmPump) {
+					} else if (ev instanceof LowHumidity) {
 						//apre la pompa
-						this.openPump(((AlarmPump) ev).getU());
+						this.openPump(((LowHumidity) ev).getU());
 					} else if (ev instanceof DonePump) {
 						//chiude la pompa
 						this.closePump();

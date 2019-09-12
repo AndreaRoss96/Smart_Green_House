@@ -1,15 +1,9 @@
-package operation;
-
+package controller;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-import common.Observable;
-import common.Observer;
-//internal packages
-import event.Event;
-/*
- * Controller of basic events, executing by looping 
- */
+import events.Event;
+
 public abstract class BasicEventLoopController extends Thread implements Observer {
 	
 	public static final int defaultEventQueueSize = 50;
@@ -23,9 +17,6 @@ public abstract class BasicEventLoopController extends Thread implements Observe
 		this(defaultEventQueueSize);
 	}
 	
-	/*
-	 * Implements all the logic of an event inside the main loop 
-	 */
 	abstract protected void processEvent(Event ev);
 	
 	public void run(){
@@ -39,7 +30,6 @@ public abstract class BasicEventLoopController extends Thread implements Observe
 		}
 	}
 	
-	/*protected methods are not inherited*/
 	protected void startObserving(Observable object){
 		object.addObserver(this);
 	}

@@ -1,8 +1,6 @@
-package common;
-
-import event.Event;
+package controller;
+import events.Event;
 
 public interface Observer {
-
 	boolean notifyEvent(Event ev);
 }

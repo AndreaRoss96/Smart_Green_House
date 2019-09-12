@@ -1,8 +1,7 @@
-package common;
-
+package controller;
 import java.util.LinkedList;
 
-import event.Event;
+import events.Event;
 
 public class Observable {
 	
@@ -12,13 +11,6 @@ public class Observable {
 		observers = new LinkedList<Observer>();
 	}
 	
-	/*
-	 * I metodi synchronized sono utilizzati per fornire un meccanismo di sincronizzazione tra vari metodi.
-	 * 
-	 * Quando un thread ichima un metodo synchornized su di un oggetto, allora gli altri thread //
-	 * che richiamano lo stesso metodo sospendono la loro esecuzione fino al termine dell'esecuzione //
-	 * del metodo chiamato dal primo thread.
-	 */
 	protected void notifyEvent(Event ev){
 		synchronized (observers){
 			for (Observer obs: observers){
@@ -38,5 +30,4 @@ public class Observable {
 			observers.remove(obs);
 		}
 	}
-
 }
