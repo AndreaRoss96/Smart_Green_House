@@ -66,6 +66,7 @@ public class EventLoopControllerImpl extends BasicEventLoopController {
 							//memorizza il cambio di modalità da manuale ad automatico
 							save("AUTO MODE -> ARDUINO");
 							log("AUTO MODE");
+							hAgent.setRegular();
 							state = State.AUTO;
 						}
 					}
