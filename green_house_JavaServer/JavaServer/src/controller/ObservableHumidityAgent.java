@@ -1,14 +1,15 @@
-import events.AlarmPump;
+package controller;
+import events.LowHumidity;
 import events.DonePump;
 import events.LogUm;
 
-public class HumidityAgent extends Observable{
+public class ObservableHumidityAgent extends Observable {
 	private enum State{REGULAR,IRRIGATION,MANUALE};
 	private State state;
 	private final int Umin = 30;
 	private final int delta = 5;
 	
-	public HumidityAgent() {
+	public ObservableHumidityAgent() {
 		state = State.REGULAR;
 	}
 	
@@ -17,7 +18,7 @@ public class HumidityAgent extends Observable{
 		switch(state) {
 		case REGULAR:
 			if(U < Umin) {
-				this.notifyEvent(new AlarmPump(U));
+				this.notifyEvent(new LowHumidity(U));
 				state = State.IRRIGATION;
 				log("VALUE UNDER MINIMUM LEVEL");
 			}

@@ -1,3 +1,4 @@
+package controller;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
@@ -17,8 +18,8 @@ import java.time.Instant;
 public class DataService extends AbstractVerticle{
 
 	private final int port;
-	private final HumidityAgent hAgent;
-	public DataService(final int port, final HumidityAgent hAgent) {		
+	private final ObservableHumidityAgent hAgent;
+	public DataService(final int port, final ObservableHumidityAgent hAgent) {		
 		this.port = port;
 		this.hAgent = hAgent;
 	}

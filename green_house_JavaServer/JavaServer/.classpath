@@ -2,11 +2,11 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="Lib"/>
-	<classpathentry kind="lib" path="Lib/jssc.jar"/>
-	<classpathentry kind="lib" path="Lib/netty-all-4.1.31.Final.jar"/>
-	<classpathentry kind="lib" path="Lib/vertx-core-3.7.1.jar"/>
-	<classpathentry kind="lib" path="Lib/vertx-web-3.7.1.jar"/>
-	<classpathentry kind="lib" path="Lib/vertx-web-client-3.7.1.jar"/>
+	<classpathentry kind="src" path="lib"/>
+	<classpathentry kind="lib" path="lib/jssc.jar"/>
+	<classpathentry kind="lib" path="lib/netty-all-4.1.31.Final.jar"/>
+	<classpathentry kind="lib" path="lib/vertx-core-3.7.1.jar"/>
+	<classpathentry kind="lib" path="lib/vertx-web-3.7.1.jar"/>
+	<classpathentry kind="lib" path="lib/vertx-web-client-3.7.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

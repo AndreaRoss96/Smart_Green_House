@@ -1,15 +1,9 @@
-package communication;
+package controller;
+import communication.CommChannel;
+import communication.ExtendedSerialCommChannel;
+import events.MsgEvent;
 
-import common.CommChannel;
-import common.ExtendedSerialCommChannel;
-import common.Observable;
-import event.MsgEvent;
-
-/*
- * Lab 4.3
- */
 public class MsgService extends Observable {
-
 	private CommChannel channel;
 	private String port;
 	private int rate;
@@ -19,7 +13,7 @@ public class MsgService extends Observable {
 		this.rate = rate;
 	}
 	
-	void init(){
+	public void init(){
 		try {
 			channel = new ExtendedSerialCommChannel(port, rate);	
 			// channel = new SerialCommChannel(port, rate);	
@@ -31,11 +25,14 @@ public class MsgService extends Observable {
 		}
 		
 		new Thread(() -> {
+			System.out.println("Message service is listening");
 			while (true) {
 				try {
-					String msg = channel.receiveMsg();
-					System.out.println("received "+msg);
-					this.notifyEvent(new MsgEvent(msg));
+					if(channel.isMsgAvailable()) {
+						String msg = channel.receiveMsg();
+						System.out.println("[Received] "+msg);
+						this.notifyEvent(new MsgEvent(msg));
+					}
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -45,7 +42,13 @@ public class MsgService extends Observable {
 	
 	public void sendMsg(String msg) {
 		channel.sendMsg(msg);
-		System.out.println("sent "+msg);
+		System.out.println("[MSGSERVICE] sent "+msg);
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }
