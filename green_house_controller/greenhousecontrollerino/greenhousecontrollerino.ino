@@ -57,7 +57,7 @@ void setup(){
   Task *search = new TaskSearch(prox, la, lm);
   Task *comunicate = new TaskComunicate(msgServiceBT, la, lm, servo, lp);
 
-  comunicate->init(1000);
+  comunicate->init(500);
   search->init(1000);
   scheduler.init(500);
   scheduler.addTask(comunicate);
