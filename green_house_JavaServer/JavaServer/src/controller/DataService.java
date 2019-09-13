@@ -39,16 +39,11 @@ public class DataService extends AbstractVerticle{
 	}
 	
 	private void handleAddNewData(RoutingContext routingContext) {
-		System.out.println("before _response_");
 		HttpServerResponse response = routingContext.response();
-		System.out.println("before get json");
 		JsonObject res = routingContext.getBodyAsJson();
-		System.out.println("before if(res)");
 		if (res == null) {
-			System.out.println("Ti piacerebbe");
 			sendError(400, response);
 		} else {
-			System.out.println("Eccolo" + res.toString());
 			if(res.getInteger("Humidity") != null) {
 				try {
 					log(res.getInteger("Humidity").toString());
