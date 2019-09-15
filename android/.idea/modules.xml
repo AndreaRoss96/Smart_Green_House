@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/bt-client/bt-client.iml" filepath="$PROJECT_DIR$/bt-client/bt-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bt-lib/bt-lib.iml" filepath="$PROJECT_DIR$/bt-lib/bt-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smart_green_house.iml" filepath="$PROJECT_DIR$/smart_green_house.iml" />
+    </modules>
+  </component>
+</project>
