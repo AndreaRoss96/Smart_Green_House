@@ -8,7 +8,6 @@ public:
   /* period in ms */
   void setupPeriod(int period);  
   void waitForNextTick();
-
 };
 
 

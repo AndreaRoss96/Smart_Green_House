@@ -32,7 +32,7 @@ ISR (TIMER2_OVF_vect)
   {
 	// we have finished timing the channel so pulse it low and move on
 	if(servos[Channel].Pin.isActive == true)	     // check if activated
-	    digitalWrite( servos[Channel].Pin.nbr,LOW); // pulse this channel low if active   
+	    digitalWrite(servos[Channel].Pin.nbr,LOW); // pulse this channel low if active   
 
 	  Channel++;    // increment to the next channel
 	ISRCount = 0; // reset the isr iteration counter 
