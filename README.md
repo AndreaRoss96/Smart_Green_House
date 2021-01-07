@@ -3,7 +3,8 @@ integrated embedded system that represents a simplified version of a smart green
 
 The task of the smart greenhouse is the automated irrigation (of a certain soil or plant) by implementing a strategy that takes into account the perceived humidity, with the possibility to control and intervene manually via mobile app.
 
-
+The system is composed by 5 subsystems:
+![alt text](https://github.com/AndreaRoss96/Smart_Green_House/blob/master/Report/system.jpg)
 
 
  * GreenHouse Server (PC)
