@@ -17,3 +17,5 @@ The system is composed by 5 subsystems:
    - allows manual control of the greenhouse 
  * GreenHouse Front End (PC)
    - Front end for data visualisation/observation/analysis
+
+![alt text](https://github.com/AndreaRoss96/Smart_Green_House/blob/master/Report/controllerino_bb.png)
